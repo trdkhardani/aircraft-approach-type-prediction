@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model airports {
+  airport_id Int @id @default(autoincrement())
+  airport_icao String
+  atis atis[]
+  runways_rvr runways_rvr[]
+}
+
+model atis {
+  atis_id Int @id @default(autoincrement())
+  airport_id Int
+  atis_info String
+  atis_added_at DateTime @default(now())
+  airport airports @relation(fields: [airport_id], references: [airport_id])
+}
+
+model runways_rvr {
+  runway_rvr_id Int @id @default(autoincrement())
+  airport_id Int
+  runway_code String
+  rvr String
+  rvr_added_at DateTime @default(now())
+  airport airports @relation(fields: [airport_id], references: [airport_id])
+}
