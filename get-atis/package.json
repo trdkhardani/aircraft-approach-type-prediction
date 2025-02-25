@@ -11,6 +11,7 @@
   "dependencies": {
     "@prisma/client": "^6.4.1",
     "axios": "^1.7.9",
+    "get-atis": "file:",
     "prisma": "^6.4.1",
     "rvr": "^1.0.4"
   }

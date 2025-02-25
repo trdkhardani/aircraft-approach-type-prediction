@@ -58,7 +58,8 @@ const getAirportInfo = async (airportIcao) => {
         getAirportInfo("KATL"),
         getAirportInfo("KIAD"),
         getAirportInfo("KORD"),
-        getAirportInfo("KSFO")
+        getAirportInfo("KSFO"),
+        getAirportInfo("KJFK"),
     ]);
 
     setInterval(async () => {
@@ -67,7 +68,8 @@ const getAirportInfo = async (airportIcao) => {
             getAirportInfo("KATL"),
             getAirportInfo("KIAD"),
             getAirportInfo("KORD"),
-            getAirportInfo("KSFO")
+            getAirportInfo("KSFO"),
+            getAirportInfo("KJFK"),
         ]);
     }, 3600000);
 })();
