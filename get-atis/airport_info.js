@@ -49,7 +49,9 @@ const getAirportInfo = async (airportIcao) => {
     }
 }
 
+
 (async () => {
+    console.log("Fetching ATIS and RVR Data...")
     // initial execution
     await Promise.all([
         getAirportInfo("KLAX"),
