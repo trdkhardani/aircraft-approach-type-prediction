@@ -50,13 +50,14 @@ const getAirportInfo = async (airportIcao) => {
 }
 
 (async () => {
-    // await Promise.all([
-    //     getAirportInfo("KLAX"),
-    //     getAirportInfo("KATL"),
-    //     getAirportInfo("KIAD"),
-    //     getAirportInfo("KORD"),
-    //     getAirportInfo("KSFO")
-    // ]);
+    // initial execution
+    await Promise.all([
+        getAirportInfo("KLAX"),
+        getAirportInfo("KATL"),
+        getAirportInfo("KIAD"),
+        getAirportInfo("KORD"),
+        getAirportInfo("KSFO")
+    ]);
 
     setInterval(async () => {
         await Promise.all([
