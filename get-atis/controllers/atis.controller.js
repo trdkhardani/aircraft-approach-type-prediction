@@ -23,33 +23,16 @@ class AtisController {
                     atis_added_at: true,
                     airport: {
                         select: {
-                            runways_rvr: true,
+                            runways_rvr: {
+                                orderBy: {
+                                    rvr_added_at: 'asc'
+                                }
+                            },
                             airport_icao: true,
                         }
                     },
                 }
             })
-
-            // const atisInfo = await prisma.runways_rvr.findMany({
-            //     where: {
-            //         airport: {
-            //             airport_icao: airport_icao,
-            //         }
-            //     },
-            //     orderBy: {
-            //         rvr_added_at: 'asc',
-            //     },
-            //     select: {
-            //         rvr: true,
-            //         runway_code: true,
-            //         rvr_added_at: true,
-            //         airport: {
-            //             select: {
-            //                 atis: true
-            //             }
-            //         }
-            //     }
-            // })
     
             if(atisInfo.length === 0){
                 throw {
@@ -58,45 +41,43 @@ class AtisController {
                 }
             }
 
-            const rvrInfo = atisInfo.map((runwaysRvr) => {
-                return runwaysRvr.airport.runways_rvr.map((rvrInfo) => {
-                    return {
-                        runway_rvr_id: rvrInfo.runway_rvr_id,
-                        runway_code: rvrInfo.runway_code,
-                        rvr: rvrInfo.rvr,
-                        rvr_added_at: rvrInfo.rvr_added_at,
-                    }
-                })
-            })
+            // Create a lookup table for RVR data grouped by formatted datetime
+            const rvrInfoLookup = {};
+            atisInfo.forEach((atisData) => {
+                atisData.airport.runways_rvr.forEach((rvrData) => {
+                    const formattedDatetime = DateTimeUtils.formatDateTimeNoSecs(rvrData.rvr_added_at);
 
-            const airportInfo = atisInfo.map((airportInfo) => {
+                    if (!rvrInfoLookup[formattedDatetime]) {
+                        rvrInfoLookup[formattedDatetime] = [];
+                    }
+                    
+                    // Prevent duplicate entries if already present
+                    if (!rvrInfoLookup[formattedDatetime].some(entry => entry.runway_rvr_id === rvrData.runway_rvr_id)) {
+                        rvrInfoLookup[formattedDatetime].push(rvrData);
+                    }
+                });
+            });
+            
+            // Match ATIS data with RVRs that have the same formatted datetime
+            const airportInfo = atisInfo.map((atisData) => {
+                const formattedAtisDatetime = DateTimeUtils.formatDateTimeNoSecs(atisData.atis_added_at);
+
                 return {
-                    airport: airportInfo.airport.airport_icao,
-                    atis: airportInfo.atis_info,
+                    airport: atisData.airport.airport_icao,
+                    atis: atisData.atis_info,
                     atis_added_at: {
-                        raw: airportInfo.atis_added_at,
-                        formatted: DateTimeUtils.formatDateTimeNoSecs(airportInfo.atis_added_at)
+                        raw: atisData.atis_added_at,
+                        formatted: formattedAtisDatetime
                     },
-                    rvr_info: airportInfo.airport.runways_rvr.map((rvrInfo) => {
-                        
-                        return {
-                            runway_rvr_id: rvrInfo.runway_rvr_id,
-                            runway_code: rvrInfo.runway_code,
-                            rvr: rvrInfo.rvr,
-                            rvr_added_at: {
-                                raw: rvrInfo.rvr_added_at,
-                                formatted: DateTimeUtils.formatDateTimeNoSecs(rvrInfo.rvr_added_at)
-                            },
-                        }
-                    })
-                }
-            })
+                    rvr_info: rvrInfoLookup[formattedAtisDatetime] || [] // Attach matching RVRs
+                };
+            });
+            
 
             // const sortedAirportInfo = airportInfo.find()
     
             return res.json({
                 status: 'success',
-                // airport_info: atisInfo,
                 airport_info: airportInfo,
             })
         } catch(err){
