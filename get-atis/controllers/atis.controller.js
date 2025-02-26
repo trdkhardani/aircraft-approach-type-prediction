@@ -7,8 +7,28 @@ class AtisController {
         try {
             const {
                 airport_icao,
+                page,
+                limit
             } = req.query
+
+            const skip = (page - 1) * limit;
     
+            const atisInfoCount = await prisma.atis.count({
+                where: {
+                    airport: {
+                        airport_icao: airport_icao
+                    }
+                }
+            })
+
+            const rvrInfoCount = await prisma.runways_rvr.count({
+                where: {
+                    airport: {
+                        airport_icao: airport_icao
+                    }
+                }
+            })
+
             const atisInfo = await prisma.atis.findMany({
                 where: {
                     airport: {
@@ -31,7 +51,9 @@ class AtisController {
                             airport_icao: true,
                         }
                     },
-                }
+                },
+                skip: parseInt(skip),
+                take: parseInt(limit)
             })
     
             if(atisInfo.length === 0){
@@ -67,7 +89,7 @@ class AtisController {
                     atis: atisData.atis_info,
                     atis_added_at: {
                         raw: atisData.atis_added_at,
-                        formatted: formattedAtisDatetime
+                        formatted: `${formattedAtisDatetime} GMT`
                     },
                     rvr_info: rvrInfoLookup[formattedAtisDatetime] || [] // Attach matching RVRs
                 };
@@ -78,6 +100,10 @@ class AtisController {
     
             return res.json({
                 status: 'success',
+                page: parseInt(page),
+                limit: parseInt(limit),
+                total_atis_data: atisInfoCount,
+                total_rvr_data: rvrInfoCount,
                 airport_info: airportInfo,
             })
         } catch(err){
