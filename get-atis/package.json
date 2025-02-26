@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "atis_rvr.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -11,8 +12,13 @@
   "dependencies": {
     "@prisma/client": "^6.4.1",
     "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "get-atis": "file:",
     "prisma": "^6.4.1",
     "rvr": "^1.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }
