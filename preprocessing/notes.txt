@@ -1,0 +1,13 @@
+- multiclass multilabel, berarti tambahkan kolom untuk masing-masing tipe approach. misal:
+ILS | RNAV | RNP | VISUAL
+1 | 0 | 1 | 0
+Berarti, tipe approach-nya itu ILS dan RNP (karena 1 atau true)
+jadi kolom label itu lebih dari satu
+
+found issues:
+- unusual visibility format
+    - the current code makes the written visibility is the denominator. it supposed to be decimal
+- VRB wind
+- TS, RA, etc
+
+- pisah simbol rvr (tendencies) dengan numeric rvr. jadi ada dua kolom/fitur untuk RVR

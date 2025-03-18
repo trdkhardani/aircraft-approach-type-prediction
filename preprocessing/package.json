@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "atis-rvr-dataset-conversion": "file:",
+    "axios": "^1.8.1",
+    "json2csv": "^6.0.0-alpha.2",
+    "metar": "^1.0.0"
+  },
+  "name": "atis-rvr-dataset-conversion",
+  "version": "1.0.0",
+  "main": "convert_to_dataset.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
