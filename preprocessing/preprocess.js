@@ -181,6 +181,7 @@ async function processAtisData(page) {
         "headwind",
         "crosswind",
         "ceiling",
+        "weather_phenomenon",
         "ILS",
         "RNAV",
         "RNP",
@@ -198,6 +199,12 @@ async function processAtisData(page) {
 
       // Decode METAR using the metar library.
       const decoded = parseMETAR(fullMetar);
+
+      // Extract weather phenomenon codes (abbreviations only)
+      let weatherPhenomenon = "N/A"; // Default if no weather present
+      if (decoded.weather && decoded.weather.length > 0) {
+        weatherPhenomenon = decoded.weather.map(w => w.abbreviation).join(" ");
+      }
       
       // Attempt to obtain visibility from decoded METAR.
       let visibility = decoded.visibility;
@@ -277,6 +284,7 @@ async function processAtisData(page) {
           headwind,
           crosswind,
           ceiling,
+          weatherPhenomenon,
           ils,
           rnav,
           rnp,
@@ -295,11 +303,11 @@ async function processAtisData(page) {
 }
 
 // Process pages at an interval of 1 second.
-const maxPages = 1; // set maximum pages to process
+const maxPages = 2978; // set maximum pages to process
 // let currentPage = 1;
 // let currentPage = 31;
 // let currentPage = 170;
-let currentPage = 2543;
+let currentPage = 1;
 const intervalId = setInterval(async () => {
   await processAtisData(currentPage);
   currentPage++;

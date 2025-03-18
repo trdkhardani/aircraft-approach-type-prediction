@@ -5,9 +5,9 @@ Berarti, tipe approach-nya itu ILS dan RNP (karena 1 atau true)
 jadi kolom label itu lebih dari satu
 
 found issues:
-- unusual visibility format
-    - the current code makes the written visibility is the denominator. it supposed to be decimal
-- VRB wind
-- TS, RA, etc
+- unusual visibility format (SOLVED)
+    - the current code makes the written visibility is the denominator. it supposed to be decimal (SOLVED)
+- VRB wind (SOLVED)
+- TS, RA, etc (SOLVED)
 
 - pisah simbol rvr (tendencies) dengan numeric rvr. jadi ada dua kolom/fitur untuk RVR
