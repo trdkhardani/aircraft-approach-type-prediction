@@ -94,32 +94,42 @@ function extractRunwayInstruction(atisText) {
 //   2. Capture runway codes following "RWY" or "RY".
 //   3. Capture runway designators immediately following an approach token (e.g., "VIS 26R").
 // Also extracts known approach types (ILS, RNAV, RNP, VISUAL, VA, VIS) and normalizes VA/VIS to VISUAL.
-// Rewritten: Match approach types to specific runways
 function parseRunwayInstruction(instructionText) {
-  const approachRunwayPairs = [];
-
-  // Match phrases like "ILS RWY 10C", "VISUAL APCH RWY 9L", "RNAV RWY 28R", etc.
-  const regex = /\b(ILS|RNAV|RNP|VISUAL|VA)\b(?:\s+APCH)?\s+(?:RWY|RY)?\s*([0-9]{1,2}[A-Z]?)/gi;
+  const approachRegex = /\b(ILS|RNAV|RNP|VISUAL|VA|VIS)\b/gi;
+  let approachMatches = instructionText.match(approachRegex);
+  let uniqueApproaches = [];
+  if (approachMatches) {
+    uniqueApproaches = [...new Set(approachMatches.map(m => {
+      let token = m.toUpperCase();
+      return (token === 'VA' || token === 'VIS') ? 'VISUAL' : token;
+    }))];
+  }
   
+  const runwayCodesSet = new Set();
+  
+  // Regex 1: Look for "APCHS" followed by runway code.
+  const apchsRegex = /APCHS\s+([0-9]{1,2}[A-Z]?)/gi;
   let match;
-  while ((match = regex.exec(instructionText)) !== null) {
-    const approach = match[1].toUpperCase() === 'VA' ? 'VISUAL' : match[1].toUpperCase();
-    const runway = match[2].trim();
-    approachRunwayPairs.push({ runway, approach });
+  while ((match = apchsRegex.exec(instructionText)) !== null) {
+    runwayCodesSet.add(match[1].trim());
   }
-
-  // Build a mapping: runway → array of approaches
-  const runwayMap = {};
-  for (let pair of approachRunwayPairs) {
-    if (!runwayMap[pair.runway]) {
-      runwayMap[pair.runway] = [];
-    }
-    if (!runwayMap[pair.runway].includes(pair.approach)) {
-      runwayMap[pair.runway].push(pair.approach);
-    }
+  
+  // Regex 2: Capture runway designators following "RWY" or "RY".
+  const rwyRegex = /R(?:WY|Y)\s*([0-9]{1,2}[A-Z]?)/gi;
+  while ((match = rwyRegex.exec(instructionText)) !== null) {
+    runwayCodesSet.add(match[1].trim());
   }
-
-  return runwayMap; // { "10C": ["ILS"], "9L": ["VISUAL"], ... }
+  
+  // Regex 3: Capture runway designators immediately following an approach token.
+  const approachRunwayRegex = /(?:VIS(?:UAL)?|ILS|RNAV|RNP)\s*([0-9]{1,2}[A-Z]?)/gi;
+  while ((match = approachRunwayRegex.exec(instructionText)) !== null) {
+    runwayCodesSet.add(match[1].trim());
+  }
+  
+  return {
+    availableApproachTypes: uniqueApproaches.join(','),
+    runwayCodes: Array.from(runwayCodesSet)
+  };
 }
 
 // Given a runway code (e.g., "19L" or "6R"), parse it into a numeric designator and side.
@@ -237,15 +247,10 @@ async function processAtisData(page) {
       }
 
       const runwayInstruction = extractRunwayInstruction(atisText);
-      // const { availableApproachTypes, runwayCodes } = parseRunwayInstruction(runwayInstruction);
-      const runwayApproachMap = parseRunwayInstruction(runwayInstruction);
-
+      const { availableApproachTypes, runwayCodes } = parseRunwayInstruction(runwayInstruction);
       
       // Determine ILS category.
-      const allApproaches = Object.values(runwayApproachMap).flat();
-      const availableApproachTypes = [...new Set(allApproaches)].join(',');
-      const ilsCategory = allApproaches.includes('ILS') ? "CAT III" : "No ILS";
-
+      const ilsCategory = availableApproachTypes.split(',').includes('ILS') ? "CAT III" : "No ILS";
       
       // Convert availableApproachTypes into multilabel columns.
       const tokens = availableApproachTypes ? availableApproachTypes.split(',') : [];
@@ -255,21 +260,18 @@ async function processAtisData(page) {
       const visual = tokens.includes("VISUAL") ? 1 : 0;
 
       // Create a CSV row for each runway code extracted.
-      for (let [rwCode, approaches] of Object.entries(runwayApproachMap)) {
+      for (let rwCode of runwayCodes) {
+        if (!rwCode) continue;
         const { runway_designator_number, runway_designator_side } = parseRunwayCode(rwCode);
         const rvr = getRvrForRunway(airportData.rvr_info, rwCode) || '';
         const runwayHeading = runway_designator_number * 10;
-      
         let headwind = 0, crosswind = 0;
+
+        // Only calculate wind components if wind direction is NOT VRB (-1)
         if (windDir !== -1) {
           ({ headwind, crosswind } = calculateWindComponents(windSpeed, windDir, runwayHeading));
         }
-      
-        const ils = approaches.includes("ILS") ? 1 : 0;
-        const rnav = approaches.includes("RNAV") ? 1 : 0;
-        const rnp = approaches.includes("RNP") ? 1 : 0;
-        const visual = approaches.includes("VISUAL") ? 1 : 0;
-      
+
         const row = [
           airportIcao,
           visibility,
@@ -287,9 +289,9 @@ async function processAtisData(page) {
           rnav,
           rnp,
           visual
-        ];
+        ];        
         csvRows.push(row.join(';'));
-      }      
+      }
     }
 
     // Append the rows to the CSV file.
@@ -301,11 +303,11 @@ async function processAtisData(page) {
 }
 
 // Process pages at an interval of 1 second.
-const maxPages = 1; // set maximum pages to process
+const maxPages = 3749; // set maximum pages to process
 // let currentPage = 1;
 // let currentPage = 31;
 // let currentPage = 170;
-let currentPage = 3726;
+let currentPage = 1;
 const intervalId = setInterval(async () => {
   await processAtisData(currentPage);
   currentPage++;
