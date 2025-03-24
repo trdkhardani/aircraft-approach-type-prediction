@@ -39,6 +39,7 @@ class AtisController {
                     atis_added_at: 'asc'
                 },
                 select: {
+                    atis_id: true,
                     atis_info: true,
                     atis_added_at: true,
                     airport: {
@@ -86,6 +87,7 @@ class AtisController {
 
                 return {
                     airport: atisData.airport.airport_icao,
+                    atis_id: atisData.atis_id,
                     atis: atisData.atis_info,
                     atis_added_at: {
                         raw: atisData.atis_added_at,
