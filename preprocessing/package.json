@@ -2,6 +2,7 @@
   "dependencies": {
     "atis-rvr-dataset-conversion": "file:",
     "axios": "^1.8.1",
+    "dotenv": "^16.4.7",
     "json2csv": "^6.0.0-alpha.2",
     "metar": "^1.0.0"
   },

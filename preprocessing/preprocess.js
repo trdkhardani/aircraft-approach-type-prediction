@@ -13,6 +13,9 @@
 const axios = require('axios');
 const parseMETAR = require('metar'); // parseMETAR is a variable name
 const fs = require('fs');
+const dotenv = require('dotenv').config();
+
+const ATIS_HISTORY_API_URL = process.env.ATIS_HISTORY_API_URL;
 
 // Revised helper function to convert unusual visibility strings into a decimal value.
 // It handles formats like "M1/4SM", "1/4SM", or "1 1/2SM" (where "M" indicates "less than").
@@ -164,7 +167,7 @@ function getRvrForRunway(rvrInfo, runwayCode) {
 async function processAtisData(page) {
   try {
     const limit = 1; // Set desired limit per page
-    const response = await axios.get(`http://34.128.70.61:3000/api/atis?page=${page}&limit=${limit}`);
+    const response = await axios.get(`${ATIS_HISTORY_API_URL}?page=${page}&limit=${limit}`);
     const data = response.data;
     const csvRows = [];
     // On first page, add header with multilabel columns.

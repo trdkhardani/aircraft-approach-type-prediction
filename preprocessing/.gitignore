@@ -1,4 +1,7 @@
+.env
 node_modules/
 data_*.json
 atis_dataset.csv
 debug.js
+*.sh
+*.txt
