@@ -176,6 +176,7 @@ async function processAtisData(page) {
         "airport_icao",
         "visibility",
         "wind_speed",
+        "wind_gust",
         "wind_direction",
         "rvr",
         "runway_designator_number",
@@ -223,6 +224,7 @@ async function processAtisData(page) {
 
       // Handle wind. If wind direction is "VRB" or non-numeric, set to 0.
       let windSpeed = decoded.wind ? decoded.wind.speed : 0;
+      let windGust = decoded.wind && decoded.wind.gust ? decoded.wind.gust : 0;
       let windDir = 0;
 
       if (decoded.wind && decoded.wind.direction) {
@@ -279,6 +281,7 @@ async function processAtisData(page) {
           airportIcao,
           visibility,
           windSpeed,
+          windGust,
           windDir,
           rvr,
           runway_designator_number,
