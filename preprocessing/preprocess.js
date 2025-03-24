@@ -173,6 +173,7 @@ async function processAtisData(page) {
     // On first page, add header with multilabel columns.
     if (page === 1) {
       csvRows.push([
+        "atis_id",
         "airport_icao",
         "visibility",
         "wind_speed",
@@ -195,6 +196,7 @@ async function processAtisData(page) {
 
     // Process each airport entry.
     for (let airportData of data.airport_info) {
+      const atisId = airportData.atis_id;
       const airportIcao = airportData.airport;
       const atisText = airportData.atis;
       const atisTime = extractTimestamp(atisText) || airportData.atis_added_at.formatted.split(' ')[3];
@@ -278,6 +280,7 @@ async function processAtisData(page) {
         }
 
         const row = [
+          atisId,
           airportIcao,
           visibility,
           windSpeed,
