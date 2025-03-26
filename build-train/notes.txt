@@ -1,0 +1,85 @@
+OVR
+1.
+- dropped columns: ['airport_icao', 'rvr_tendency', 'runway_designator_side', 
+                    'runway_ils_category', 'weather_phenomenon']
+- one-hot encoded features: ['runway_designator_number']
+- NO HYPERPARAMETERS
+- Result:
+Samples with no predicted labels: 6 out of 1319
+      visibility  wind_speed  wind_gust  wind_direction     rvr  headwind  \
+1046        10.0          23         35             300  6000.0      23.0   
+705         10.0           8          0             240  6000.0       6.1   
+1512        10.0          12          0             280  6000.0      12.0   
+6514        10.0           8          0             240  6000.0       6.1   
+5362        10.0           6          0             280  6000.0       6.0   
+3203        10.0           8          0             240  6000.0       6.1   
+
+      crosswind  ceiling  runway_designator_number_1  \
+1046        0.0     -1.0                       False   
+705         5.1     -1.0                       False   
+1512        0.0     -1.0                       False   
+6514        5.1     -1.0                       False   
+5362        0.0     -1.0                       False   
+3203        5.1     -1.0                       False   
+
+      runway_designator_number_4  ...  runway_designator_number_13  \
+1046                       False  ...                        False   
+705                        False  ...                        False   
+1512                       False  ...                        False   
+6514                       False  ...                        False   
+5362                       False  ...                        False   
+3203                       False  ...                        False   
+
+      runway_designator_number_19  runway_designator_number_22  \
+1046                        False                        False   
+705                         False                        False   
+1512                        False                        False   
+6514                        False                        False   
+5362                        False                        False   
+3203                        False                        False   
+
+      runway_designator_number_24  runway_designator_number_25  \
+1046                        False                        False   
+705                         False                        False   
+1512                        False                        False   
+6514                        False                        False   
+5362                        False                        False   
+3203                        False                        False   
+
+      runway_designator_number_26  runway_designator_number_27  \
+1046                        False                        False   
+705                         False                        False   
+1512                        False                        False   
+6514                        False                        False   
+5362                        False                        False   
+3203                        False                        False   
+
+      runway_designator_number_28  runway_designator_number_30  \
+1046                        False                         True   
+705                          True                        False   
+1512                         True                        False   
+6514                         True                        False   
+5362                         True                        False   
+3203                         True                        False   
+
+      runway_designator_number_31  
+1046                        False  
+705                         False  
+1512                        False  
+6514                        False  
+5362                        False  
+3203                        False  
+
+[6 rows x 25 columns]
+              precision    recall  f1-score   support
+
+         ILS       0.90      0.93      0.92       950
+        RNAV       0.95      0.87      0.91       159
+         RNP       1.00      0.99      1.00       105
+      VISUAL       0.92      0.97      0.95       880
+
+   micro avg       0.92      0.95      0.93      2094
+   macro avg       0.94      0.94      0.94      2094
+weighted avg       0.92      0.95      0.93      2094
+ samples avg       0.91      0.94      0.91      2094
+
