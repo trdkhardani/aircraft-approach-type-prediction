@@ -1,0 +1,221 @@
+MOC
+1.
+- dropped columns: ['airport_icao', 'rvr_tendency', 'runway_designator_side', 
+                    'runway_ils_category', 'weather_phenomenon']
+- one-hot encoded features: ['runway_designator_number']
+- NO HYPERPARAMETERS (DEFAULT)
+- Result:
+Samples with no predicted labels: 6 out of 1319
+      visibility  wind_speed  wind_gust  wind_direction     rvr  headwind  \
+1046        10.0          23         35             300  6000.0      23.0   
+705         10.0           8          0             240  6000.0       6.1   
+1512        10.0          12          0             280  6000.0      12.0   
+6514        10.0           8          0             240  6000.0       6.1   
+5362        10.0           6          0             280  6000.0       6.0   
+3203        10.0           8          0             240  6000.0       6.1   
+
+      crosswind  ceiling  runway_designator_number_1  \
+1046        0.0     -1.0                       False   
+705         5.1     -1.0                       False   
+1512        0.0     -1.0                       False   
+6514        5.1     -1.0                       False   
+5362        0.0     -1.0                       False   
+3203        5.1     -1.0                       False   
+
+      runway_designator_number_4  ...  runway_designator_number_13  \
+1046                       False  ...                        False   
+705                        False  ...                        False   
+1512                       False  ...                        False   
+6514                       False  ...                        False   
+5362                       False  ...                        False   
+3203                       False  ...                        False   
+
+      runway_designator_number_19  runway_designator_number_22  \
+1046                        False                        False   
+705                         False                        False   
+1512                        False                        False   
+6514                        False                        False   
+5362                        False                        False   
+3203                        False                        False   
+
+      runway_designator_number_24  runway_designator_number_25  \
+1046                        False                        False   
+705                         False                        False   
+1512                        False                        False   
+6514                        False                        False   
+5362                        False                        False   
+3203                        False                        False   
+
+      runway_designator_number_26  runway_designator_number_27  \
+1046                        False                        False   
+705                         False                        False   
+1512                        False                        False   
+6514                        False                        False   
+5362                        False                        False   
+3203                        False                        False   
+
+      runway_designator_number_28  runway_designator_number_30  \
+1046                        False                         True   
+705                          True                        False   
+1512                         True                        False   
+6514                         True                        False   
+5362                         True                        False   
+3203                         True                        False   
+
+      runway_designator_number_31  
+1046                        False  
+705                         False  
+1512                        False  
+6514                        False  
+5362                        False  
+3203                        False  
+
+[6 rows x 25 columns]
+              precision    recall  f1-score   support
+
+         ILS       0.90      0.93      0.92       950
+        RNAV       0.95      0.87      0.91       159
+         RNP       1.00      0.99      1.00       105
+      VISUAL       0.92      0.97      0.95       880
+
+   micro avg       0.92      0.95      0.93      2094
+   macro avg       0.94      0.94      0.94      2094
+weighted avg       0.92      0.95      0.93      2094
+ samples avg       0.91      0.94      0.91      2094
+
+2.
+- dropped columns: ['airport_icao', 'runway_designator_side', 
+                    'runway_ils_category', 'weather_phenomenon']
+- one-hot encoded features: ['runway_designator_number', 'rvr_tendency']
+- NO HYPERPARAMETERS (DEFAULT)
+- Result:
+Samples with no predicted labels: 5 out of 1319
+      visibility  wind_speed  wind_gust  wind_direction     rvr  headwind  \
+3947        10.0           8          0             260  6000.0       8.0   
+5845        10.0          14         21             350  6000.0       4.8   
+1046        10.0          23         35             300  6000.0      23.0   
+1512        10.0          12          0             280  6000.0      12.0   
+5362        10.0           6          0             280  6000.0       6.0   
+
+      crosswind  ceiling  runway_designator_number_1  \
+3947        0.0  20000.0                       False   
+5845       13.2  25000.0                       False   
+1046        0.0     -1.0                       False   
+1512        0.0     -1.0                       False   
+5362        0.0     -1.0                       False   
+
+      runway_designator_number_4  ...  runway_designator_number_25  \
+3947                       False  ...                        False   
+5845                       False  ...                        False   
+1046                       False  ...                        False   
+1512                       False  ...                        False   
+5362                       False  ...                        False   
+
+      runway_designator_number_26  runway_designator_number_27  \
+3947                         True                        False   
+5845                        False                        False   
+1046                        False                        False   
+1512                        False                        False   
+5362                        False                        False   
+
+      runway_designator_number_28  runway_designator_number_30  \
+3947                        False                        False   
+5845                         True                        False   
+1046                        False                         True   
+1512                         True                        False   
+5362                         True                        False   
+
+      runway_designator_number_31  rvr_tendency_Deteriorating  \
+3947                        False                       False   
+5845                        False                       False   
+1046                        False                       False   
+1512                        False                       False   
+5362                        False                       False   
+
+      rvr_tendency_Excellent  rvr_tendency_Improving  rvr_tendency_Stable  
+3947                    True                   False                False  
+5845                    True                   False                False  
+1046                    True                   False                False  
+1512                    True                   False                False  
+5362                    True                   False                False  
+
+[5 rows x 29 columns]
+              precision    recall  f1-score   support
+
+         ILS       0.90      0.94      0.92       950
+        RNAV       0.95      0.86      0.90       159
+         RNP       1.00      0.99      1.00       105
+      VISUAL       0.92      0.96      0.94       880
+
+   micro avg       0.92      0.95      0.93      2094
+   macro avg       0.94      0.94      0.94      2094
+weighted avg       0.92      0.95      0.93      2094
+ samples avg       0.91      0.94      0.91      2094
+
+3.
+- dropped columns: ['airport_icao', 'runway_designator_side', 'weather_phenomenon']
+- one-hot encoded features: ['runway_designator_number', 'rvr_tendency', 'runway_ils_category']
+- NO HYPERPARAMETERS (DEFAULT)
+- Result:
+Samples with no predicted labels: 5 out of 1319
+      visibility  wind_speed  wind_gust  wind_direction     rvr  headwind  \
+5612        10.0           8          0             190  6000.0       6.9   
+5589        10.0           6          0             130  6000.0       0.0   
+6358        10.0          13          0             190  6000.0      11.3   
+447          9.0          11          0             210  6000.0       3.8   
+3887        10.0           4          0             170  6000.0      -1.4   
+
+      crosswind  ceiling  runway_designator_number_1  \
+5612        4.0     -1.0                       False   
+5589        6.0     -1.0                       False   
+6358        6.5  16000.0                       False   
+447        10.3     -1.0                       False   
+3887        3.8  15000.0                       False   
+
+      runway_designator_number_4  ...  runway_designator_number_28  \
+5612                       False  ...                        False   
+5589                       False  ...                        False   
+6358                       False  ...                        False   
+447                        False  ...                         True   
+3887                       False  ...                         True   
+
+      runway_designator_number_30  runway_designator_number_31  \
+5612                        False                        False   
+5589                        False                        False   
+6358                        False                        False   
+447                         False                        False   
+3887                        False                        False   
+
+      rvr_tendency_Deteriorating  rvr_tendency_Excellent  \
+5612                       False                    True   
+5589                       False                    True   
+6358                       False                    True   
+447                        False                    True   
+3887                       False                    True   
+
+      rvr_tendency_Improving  rvr_tendency_Stable  runway_ils_category_CAT I  \
+5612                   False                False                      False   
+5589                   False                False                      False   
+6358                   False                False                      False   
+447                    False                False                      False   
+3887                   False                False                      False   
+
+      runway_ils_category_CAT II  runway_ils_category_CAT III  
+5612                       False                         True  
+5589                       False                         True  
+6358                       False                         True  
+447                         True                        False  
+3887                        True                        False  
+
+[5 rows x 32 columns]
+              precision    recall  f1-score   support
+
+         ILS       0.96      0.96      0.96       950
+        RNAV       0.95      0.90      0.92       159
+         RNP       1.00      1.00      1.00       105
+      VISUAL       0.93      0.97      0.95       880
+
+   micro avg       0.95      0.96      0.96      2094
+   macro avg       0.96      0.96      0.96      2094
+weighted avg       0.95      0.96      0.96      2094
+ samples avg       0.94      0.96      0.94      2094
