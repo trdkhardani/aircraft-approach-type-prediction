@@ -4,7 +4,7 @@ import pickle
 import numpy as np
 
 # load model
-with open("../../trained-model/model.pkl", "rb") as f:
+with open("../trained-model/model.pkl", "rb") as f:
     model = pickle.load(f)
 
 # create FastAPI app
