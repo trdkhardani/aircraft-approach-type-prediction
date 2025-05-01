@@ -7,17 +7,12 @@ class FeatureUtils {
             return category.value === featureValue
         })
 
-        // if(!featureValue){
-        //     throw {
-        //         statusCode: 400,
-        //         message: `${prefix} field can't be empty`
-        //     }
-        // } else if(!matchedCategory){
-        //     throw {
-        //         statusCode: 400,
-        //         message: `${featureValue} not found`
-        //     }
-        // }                        
+        if(!matchedCategory){
+            throw {
+                statusCode: 404,
+                message: `${featureValue} not found`
+            }
+        }                        
 
         for(let i = 0; i < categories.length; i++){
             if(categories[i].value === featureValue){

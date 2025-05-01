@@ -7,6 +7,6 @@ const PredictController = require('../controllers/predict.controller');
 app.get("/api", IndexController.index);
 app.get("/test-fetch", IndexController.testFetch)
 
-app.post("/api/predict", PredictController.airportIcaoOneHotEncode)
+app.post("/api/predict", PredictController.dataInput)
 
 module.exports = app;

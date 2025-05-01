@@ -1,58 +1,27 @@
 const FeatureUtils = require("../utils/feature-utils")
+const AirportEncode = require("./one-hot-encode/airport")
+
 
 class PredictController {
-    static async airportIcaoOneHotEncode(req, res, next){
+    static async dataInput(req, res, next){
         try {
             const {
+                visibility,
+                wind_speed,
+                wind_gust,
+                wind_direction,
+                rvr,
+                headwind,
+                crosswind,
+                ceiling,
                 airport_icao
             } = req.body
-    
-            const airports = [
-                {
-                    value: "KATL",
-                    binary: 0
-                }, 
-                {
-                    value: "KIAD",
-                    binary: 0
-                }, 
-                {
-                    value: "KJFK",
-                    binary: 0
-                }, 
-                {
-                    value: "KLAX",
-                    binary: 0
-                }, 
-                {
-                    value: "KORD",
-                    binary: 0
-                }, 
-                {
-                    value: "KSFO",
-                    binary: 0
-                }
-            ]
 
-            let airportIcaoUpper = airport_icao.toUpperCase();
-
-            const airportOneHotEncode = FeatureUtils.oneHotEncode("airport_icao", airports, airportIcaoUpper)
-
-            if(!airportIcaoUpper){
-                throw {
-                    statusCode: 400,
-                    message: "airport_icao field can't be empty"
-                }
-            } else if(!airportOneHotEncode.matchedCategory){
-                throw {
-                    statusCode: 400,
-                    message: `${airportIcaoUpper} not found`
-                }
-            }                        
+            const airportOneHotEncode = AirportEncode.airportOneHotEncode(airport_icao);                     
 
             return res.json({
                 status: 'success',
-                message: `Airport ${airportIcaoUpper} found`,
+                message: `Input is valid`,
                 airports: airportOneHotEncode.mappedCategories
             })
         }
