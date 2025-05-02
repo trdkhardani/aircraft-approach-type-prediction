@@ -312,11 +312,11 @@ async function processAtisData(page) {
 }
 
 // Process pages at an interval of 1 second.
-const maxPages = 6787; // set maximum pages to process
+const maxPages = 3749; // set maximum pages to process
 // let currentPage = 1;
 // let currentPage = 31;
 // let currentPage = 170;
-let currentPage = 3749;
+let currentPage = 1;
 const intervalId = setInterval(async () => {
   await processAtisData(currentPage);
   currentPage++;

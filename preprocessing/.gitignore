@@ -1,7 +1,11 @@
 .env
 node_modules/
 data_*.json
-atis_dataset.csv
+*.csv
 debug.js
 *.sh
 *.txt
+new_parseRunwayInstruction_code.js
+json/
+old_codes/
+py/*.csv

@@ -9,5 +9,58 @@ found issues:
     - the current code makes the written visibility is the denominator. it supposed to be decimal (SOLVED)
 - VRB wind (SOLVED)
 - TS, RA, etc (SOLVED)
+- if there's wind gust (SOLVED)
+- `ils_runway_category` not changed (still the same): KIAD 19L, KLAX 6L, KLAX 24L, KLAX 25R 
 
-- pisah simbol rvr (tendencies) dengan numeric rvr. jadi ada dua kolom/fitur untuk RVR
+- pisah simbol rvr (tendencies) dengan numeric rvr. jadi ada dua kolom/fitur untuk RVR (SOLVED)
+
+Wind Direction = -1 for VRB wind, 0 for calm wind, normal degrees for regular wind.
+Ceiling -1 means no ceiling
+soon:
+- add max_headwind and max_crosswind if there's wind gust
+
+----------------
+HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
+$ node preprocess.js 
+Page 1 processed.
+All pages processed.
+
+HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
+$ node preprocess.js 
+Page 3747 processed.
+All pages processed.
+
+HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
+$ node preprocess.js 
+Page 3748 processed.
+All pages processed.
+
+HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
+$ node preprocess.js 
+Page 3749 processed.
+All pages processed.
+
+HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
+$ node preprocess.js 
+Page 3746 processed.
+All pages processed.
+
+HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
+$ node preprocess.js 
+Page 3742 processed.
+All pages processed.
+
+HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
+$ node preprocess.js 
+Page 3741 processed.
+All pages processed.
+
+HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
+$ node preprocess.js 
+Page 3740 processed.
+All pages processed.
+
+HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
+$ node preprocess.js 
+Page 3739 processed.
+All pages processed.
