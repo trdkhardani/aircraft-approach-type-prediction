@@ -65,11 +65,16 @@ class PredictController {
             })
             .catch((error) => {
                 console.log(error)
-                return { 
-                    error: "Prediction failed", 
-                    detail: error.message 
+                throw {  
+                    statusCode: error.status,
+                    message: `Prediction failed - ${error.message}`,
                 };
             })
+
+            /* will use this later */
+            // sendInputData.probabilities.forEach((proba, index, probas) => {
+            //     probas[index] = proba * 100
+            // })
 
             return res.json({
                 status: 'success',

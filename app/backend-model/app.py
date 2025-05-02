@@ -21,11 +21,15 @@ def index():
         "message": "Hello from model!"
     }
 
+
 # prediction endpoint
 @app.post("/predict")
 def predict(data: InputData):
     features_array = np.array(data.features).reshape(1, -1)
-    prediction = model.predict(features_array)
+    y_pred = model.predict(features_array)
+    y_proba = model.predict_proba(features_array)[0].tolist()
+    
     return {
-        "prediction": prediction.tolist()
+        "prediction": y_pred.tolist(),
+        "probabilities": y_proba
     }
