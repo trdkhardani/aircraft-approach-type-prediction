@@ -1,4 +1,4 @@
-const FeatureUtils = require("../../utils/feature-utils")
+const FeatureUtils = require("./generic")
 
 class AirportEncode {
     static airportOneHotEncode(airportIcao){
@@ -30,19 +30,11 @@ class AirportEncode {
         ]
     
         let airportIcaoUpper = airportIcao.toUpperCase();
-    
         
-        if(!airportIcaoUpper){
-            throw {
-                statusCode: 400,
-                message: "airport_icao field can't be empty"
-            }
-        } 
-        
-        const airportOneHotEncode = FeatureUtils.oneHotEncode(airportIcao, airports, airportIcaoUpper)
+        const encodedAirportIcao = FeatureUtils.oneHotEncode("airport_icao", airports, airportIcaoUpper)
     
         return {
-            mappedCategories: airportOneHotEncode.mappedCategories
+            mappedCategories: encodedAirportIcao.mappedCategories
         }
     }
 }
