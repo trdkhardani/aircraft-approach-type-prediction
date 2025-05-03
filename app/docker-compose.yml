@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  backend-model:
+    build: ./backend-model
+    container_name: backend-model
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+  backend-logic:
+    build: ./backend-logic
+    container_name: logic-api
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend-logic/.env
+    restart: unless-stopped
+    depends_on:
+      - backend-model
+    # volumes:
+    #   - .:/app  # Optional: use only in dev for hot-reload
+    # depends_on:
+    #   - db  # Optional: if using a database container
+
+  # Optional example for a database service
+#   db:
+#     image: postgres:14
+#     environment:
+#       POSTGRES_USER: myuser
+#       POSTGRES_PASSWORD: mypassword
+#       POSTGRES_DB: mydb
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:
