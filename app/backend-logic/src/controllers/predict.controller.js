@@ -9,6 +9,8 @@ const axios = require('axios');
 class PredictController {
     static async dataInput(req, res, next){
         try {
+            const { debug } = req.query
+
             const requiredData = {
                 visibility: Math.round(req.body.visibility * 10) / 10,
                 wind_speed: Math.round(req.body.wind_speed * 10) / 10,
@@ -76,11 +78,15 @@ class PredictController {
             //     probas[index] = proba * 100
             // })
 
+            // if(!debug){
+                
+            // }
+
             return res.json({
                 status: 'success',
                 message: `Valid input`,
                 model_output: sendInputData,
-                input_data: {
+                input_data: debug === "true" ? {
                     processed: {
                         features
                     },
@@ -100,7 +106,7 @@ class PredictController {
                         rvr_tendency: rvrTendencyData.mappedCategories,
                         runway_ils_category: runwayIlsCategoryData.mappedCategories,
                     }
-                }
+                } : {}
             })
         }
         catch(err){
