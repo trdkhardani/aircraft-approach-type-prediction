@@ -3,7 +3,8 @@ import React from 'react';
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
-import NavBar from './components/Navbar';
+import NavBar from './components/navbar';
+import LeftSideBar from './components/leftsidebar';
 
 function PredictionDashboardPage() {
   return (
