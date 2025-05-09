@@ -11,5 +11,6 @@ app.get("/test-fetch", IndexController.testFetch)
 app.post("/api/predict", PredictController.dataInput)
 
 app.get("/api/metar/:airportIcao", AirportController.getMetar)
+app.get("/api/runway/:airportIcao", AirportController.getRunways)
 
 module.exports = app;
