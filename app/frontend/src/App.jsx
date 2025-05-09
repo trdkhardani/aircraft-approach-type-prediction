@@ -5,14 +5,17 @@ import React from 'react';
 // import './App.css'
 import NavBar from './components/navbar';
 import LeftSideBar from './components/leftsidebar';
+import RightSideBar from './components/RightSidebar';
 
 function PredictionDashboardPage() {
   return (
     <div>
       <NavBar />
+      <div className="flex h-screen">
       <LeftSideBar />
-      <MapPanel />
+      <main className="flex-1 bg-gray-100 p-6"><MapPanel /></main>
       <RightSideBar />
+      </div>
     </div>
   )
 }
@@ -20,27 +23,6 @@ function PredictionDashboardPage() {
 function MapPanel() {
   return (
     <div></div>
-  )
-}
-
-function ApproachRecommendation() {
-  return (
-    <div></div>
-  )
-}
-
-function RiskAssessmentBox() {
-  return (
-    <div></div>
-  )
-}
-
-function RightSideBar() {
-  return (
-    <div>
-      <ApproachRecommendation />
-      <RiskAssessmentBox />
-    </div>
   )
 }
 

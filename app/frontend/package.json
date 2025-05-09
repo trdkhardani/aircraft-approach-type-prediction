@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.5",
+    "ag-charts-react": "^11.2.4",
     "frontend": "file:",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
