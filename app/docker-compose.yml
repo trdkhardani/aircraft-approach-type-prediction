@@ -17,6 +17,12 @@ services:
     restart: unless-stopped
     depends_on:
       - backend-model
+      - redis-server
+  redis-server:
+    image: redis:7
+    container_name: redis-server
+    ports:
+      - "6379:6379"
     # volumes:
     #   - .:/app  # Optional: use only in dev for hot-reload
     # depends_on:
