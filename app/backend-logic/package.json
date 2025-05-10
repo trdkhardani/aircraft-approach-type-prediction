@@ -22,6 +22,7 @@
     "metar": "^1.0.0",
     "prisma": "^6.7.0",
     "redis": "^5.0.1",
+    "rvr": "^1.0.4",
     "supertest": "^7.1.0"
   },
   "devDependencies": {

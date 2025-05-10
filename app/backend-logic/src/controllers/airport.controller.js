@@ -1,5 +1,6 @@
 const axios = require('axios');
 const parseMETAR = require('metar');
+const rvr = require('rvr');
 const { redisClient, redisConnect } = require('../utils/redis');
 
 const CHECKWX_METAR_API_URL = process.env.CHECKWX_METAR_API_URL;
@@ -11,8 +12,6 @@ class AirportController {
     static async getMetar(req, res, next){
         const airportIcao = req.params.airportIcao.toUpperCase();
         let isCached = false;
-        let rawMetar;
-        let decodedMetar;
         let key = `metar:${airportIcao}`
 
         redisConnect();
@@ -23,22 +22,18 @@ class AirportController {
                 isCached = true;
                 console.log("Cache hit")
 
-                const cachedMetarData = JSON.parse(cacheResults).data.toString();
-                decodedMetar = parseMETAR(cachedMetarData)
+                const cachedMetarData = JSON.parse(cacheResults);
 
                 return res.json({
                     status: 'success',
                     from_cache: isCached,
-                    metar_info: {
-                        raw: cachedMetarData,
-                        decoded: decodedMetar
-                    }
+                    metar_info: cachedMetarData
                 })
             }
 
             console.log("Cache miss")
 
-            rawMetar = await axios.get(`${CHECKWX_METAR_API_URL}/${airportIcao}`, {
+            const rawMetar = await axios.get(`${CHECKWX_METAR_API_URL}/${airportIcao}`, {
                 headers: {
                     'X-API-Key': CHECKWX_API_KEY
                 }
@@ -52,19 +47,79 @@ class AirportController {
                 };
             })
 
-            await redisClient.set(key, JSON.stringify(rawMetar), {
+            const decodedMetar = parseMETAR(rawMetar.data[0])
+            
+            const combinedMetarData = {
+                raw: rawMetar.data[0],
+                decoded: decodedMetar
+            }
+
+            await redisClient.set(key, JSON.stringify(combinedMetarData), {
                 EX: 600
             })
-
-            decodedMetar = parseMETAR(rawMetar.data[0])
 
             return res.json({
                 status: 'success',
                 from_cache: isCached,
-                metar_info: {
-                    raw: rawMetar.data[0],
-                    decoded: decodedMetar
+                metar_info: combinedMetarData
+            })
+        } catch(err) {
+            if(err.statusCode){
+                return res.status(err.statusCode).json({
+                    status: 'error',
+                    message: err.message
+                })
+            }
+            next(err)
+        }
+    }
+
+    static async getRvr(req, res, next){
+        const airportIcao = req.params.airportIcao.toUpperCase();
+        let isCached = false;
+        let key = `rvr:${airportIcao}`
+
+        redisConnect();
+
+        try {
+            const cacheResults = await redisClient.get(key);
+            if(cacheResults) {
+                isCached = true;
+                console.log("Cache hit")
+
+                const cachedRvrData = JSON.parse(cacheResults)
+
+                return res.json({
+                    status: 'success',
+                    from_cache: isCached,
+                    rvr_data: cachedRvrData
+                })
+            }
+
+            console.log("Cache miss")
+
+            const rvrData = await rvr(airportIcao.slice(1)).then(result => JSON.parse(JSON.stringify(result, null, 2)));
+
+            const rvrEachRunway = rvrData.rvrValues.map((rvr) => {
+                return {
+                    runway: rvr.RWY,
+                    rvr_TD: rvr.TD,
                 }
+            })
+
+            const extractedRvrData = {
+                last_updated: rvrData.lastUpdated,
+                rvr: rvrEachRunway,
+            }
+
+            await redisClient.set(key, JSON.stringify(extractedRvrData), {
+                EX: 600
+            })
+
+            return res.json({
+                status: 'success',
+                from_cache: isCached,
+                rvr_data: extractedRvrData,
             })
         } catch(err) {
             if(err.statusCode){
