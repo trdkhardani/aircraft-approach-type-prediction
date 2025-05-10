@@ -21,6 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "metar": "^1.0.0",
     "prisma": "^6.7.0",
+    "redis": "^5.0.1",
     "supertest": "^7.1.0"
   },
   "devDependencies": {
