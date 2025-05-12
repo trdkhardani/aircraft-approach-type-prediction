@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
@@ -8,11 +8,13 @@ import LeftSideBar from './components/leftsidebar';
 import RightSideBar from './components/RightSidebar';
 
 function PredictionDashboardPage() {
+  const [selectedAirport, setSelectedAirport] = useState('')
+
   return (
     <div>
-      <NavBar />
+      <NavBar onAirportChange={setSelectedAirport} selectedAirport={selectedAirport} />
       <div className="flex h-screen">
-      <LeftSideBar />
+      <LeftSideBar selectedAirport={selectedAirport} />
       <main className="flex-1 bg-gray-100 p-6"><MapPanel /></main>
       <RightSideBar />
       </div>
