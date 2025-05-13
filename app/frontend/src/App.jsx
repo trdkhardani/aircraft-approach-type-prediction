@@ -1,31 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
-import NavBar from './components/navbar';
-import LeftSideBar from './components/leftsidebar';
-import RightSideBar from './components/RightSidebar';
+import AxiosInstance from "./api/AxiosInstance";
+import NavBar from "./components/navbar";
+import LeftSideBar from "./components/leftsidebar";
+import RightSideBar from "./components/RightSidebar";
 
 function PredictionDashboardPage() {
-  const [selectedAirport, setSelectedAirport] = useState('')
+  const [selectedAirport, setSelectedAirport] = useState("");
+  const [selectedRunway, setSelectedRunway] = useState("");
+
+  const [metarData, setMetarData] = useState([]);
+  const [rvrData, setRvrData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!selectedAirport) return; // skip fetch if airport is empty
+    setLoading(true);
+    setError(null);
+
+    const axiosInstance = new AxiosInstance(setLoading, setError);
+    axiosInstance.fetchMetar(selectedAirport, setMetarData);
+    axiosInstance.fetchRvr(selectedAirport, setRvrData);
+  }, [selectedAirport, selectedRunway]);
 
   return (
     <div>
-      <NavBar onAirportChange={setSelectedAirport} selectedAirport={selectedAirport} />
+      <NavBar
+        onAirportChange={setSelectedAirport}
+        onRunwayChange={setSelectedRunway}
+        selectedAirport={selectedAirport}
+      />
       <div className="flex h-screen">
-      <LeftSideBar selectedAirport={selectedAirport} />
-      <main className="flex-1 bg-gray-100 p-6"><MapPanel /></main>
-      <RightSideBar />
+        <LeftSideBar
+          selectedAirport={selectedAirport}
+          metarData={metarData}
+          rvrData={rvrData}
+          loading={loading}
+          error={error}
+        />
+        <main className="flex-1 bg-gray-100 p-6">
+          <MapPanel />
+        </main>
+        <RightSideBar
+          selectedAirport={selectedAirport}
+          selectedRunway={selectedRunway}
+          metarData={metarData}
+          rvrData={rvrData}
+          loading={loading}
+          error={error}
+        />
       </div>
     </div>
-  )
+  );
 }
 
 function MapPanel() {
-  return (
-    <div></div>
-  )
+  return <div></div>;
 }
 
 function App() {
@@ -35,7 +69,7 @@ function App() {
     <>
       <PredictionDashboardPage />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

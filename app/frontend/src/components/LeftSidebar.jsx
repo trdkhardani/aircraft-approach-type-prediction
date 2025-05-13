@@ -1,34 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-import AxiosInstance from "../api/AxiosInstance";
+// import AxiosInstance from "../api/AxiosInstance";
 
-function LeftSideBar({selectedAirport}) {
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
-    
-    useEffect(() => {
-        if (!selectedAirport) return; // skip fetch if airport is empty
-        setLoading(true)
-        setError(null)
-
-        const axiosInstance = new AxiosInstance(setData, setLoading, setError);
-        axiosInstance.fetchMetar(selectedAirport)
-    }, [selectedAirport])
-
+function LeftSideBar({selectedAirport, metarData, rvrData, loading, error}) {
     return (
     <aside className="w-64 bg-gray-800 text-white p-4 h-screen overflow-y-auto">
-        <MetarBox selectedAirport={selectedAirport} data={data} loading={loading} error={error} />
-        <RvrBox selectedAirport={selectedAirport} />
-        <WindBox data={data} loading={loading} error={error} />
+        <MetarBox selectedAirport={selectedAirport} metarData={metarData} loading={loading} error={error} />
+        <RvrBox selectedAirport={selectedAirport} rvrData={rvrData} loading={loading} error={error} />
+        <WindBox metarData={metarData} loading={loading} error={error} />
     </aside>
     );
 }
 
-function MetarBox({selectedAirport, data, loading, error}) {
+function MetarBox({selectedAirport, metarData, loading, error}) {
     return (
     <div className="mb-4 p-3 bg-gray-700 rounded-md shadow">
         <h3 className="font-semibold opacity-50">METAR</h3>
@@ -37,25 +24,12 @@ function MetarBox({selectedAirport, data, loading, error}) {
         : null}
         {error 
         ? <p className="text-sm text-red-400">We couldn’t load the latest weather data. Please check your internet connection or try again shortly.</p> 
-        : <p className="text-sm text-gray-300">{loading ? <Skeleton baseColor="#3b3b3b" highlightColor="#4b4b4b" count={2} duration={1.5} enableAnimation={true}/> :  data.metar_info.raw}</p>}
+        : <p className="text-sm text-gray-300">{loading ? <Skeleton baseColor="#3b3b3b" highlightColor="#4b4b4b" count={2} duration={1.5} enableAnimation={true}/> :  metarData?.metar_info?.raw}</p>}
     </div>
     );
 }
 
-function RvrBox({selectedAirport}) {
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
-    
-    useEffect(() => {
-        if (!selectedAirport) return; // skip fetch if airport is empty
-        setLoading(true)
-        setError(null)
-
-        const axiosInstance = new AxiosInstance(setData, setLoading, setError);
-        axiosInstance.fetchRvr(selectedAirport)
-    }, [selectedAirport])
-
+function RvrBox({selectedAirport, rvrData, loading, error}) {
     return (
     <div>
         <div className="mb-4 p-3 bg-gray-700 rounded-md shadow">
@@ -64,7 +38,7 @@ function RvrBox({selectedAirport}) {
             <tbody>
                 {error
                 ? <tr><td className="text-sm text-red-400">{selectedAirport === "No airport selected" ? "Please select an airport to view METAR data" : `We couldn’t load the latest RVR data. Please check your internet connection or try again shortly.`}</td></tr>
-                : data?.rvr_data?.rvr?.map((rvr, index) => (
+                : rvrData?.rvr_data?.rvr?.map((rvr, index) => (
                     <tr key={index}>
                     <td>{loading ? <Skeleton baseColor="#3b3b3b" highlightColor="#4b4b4b" enableAnimation={true} /> : rvr.runway}</td>
                     <td>{loading ? <Skeleton baseColor="#3b3b3b" highlightColor="#4b4b4b" enableAnimation={true} /> : rvr.rvr_TD}</td>
@@ -77,11 +51,11 @@ function RvrBox({selectedAirport}) {
     );
 }
 
-function WindBox({selectedAirport, data, loading, error}) {
+function WindBox({metarData, loading, error}) {
     const windData = {
-        speed: data.metar_info?.decoded?.wind?.speed,
-        gust: data.metar_info?.decoded?.wind?.gust,
-        direction: data.metar_info?.decoded?.wind?.direction
+        speed: metarData.metar_info?.decoded?.wind?.speed,
+        gust: metarData.metar_info?.decoded?.wind?.gust,
+        direction: metarData.metar_info?.decoded?.wind?.direction
     };
     
 

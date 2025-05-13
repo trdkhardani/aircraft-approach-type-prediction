@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AxiosInstance from '../api/AxiosInstance'
 
-function NavBar({onAirportChange, selectedAirport}) {
-    const [data, setData] = useState('');
+function NavBar({onAirportChange, onRunwayChange, selectedAirport}) {
+    const [runwayData, setRunwayData] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -13,8 +13,8 @@ function NavBar({onAirportChange, selectedAirport}) {
       setLoading(true);
       setError(null);
 
-      const axiosInstance = new AxiosInstance(setData, setLoading, setError)
-      axiosInstance.fetchRunway(selectedAirport);
+      const axiosInstance = new AxiosInstance(setLoading, setError)
+      axiosInstance.fetchRunway(selectedAirport, setRunwayData);
     }, [selectedAirport])
 
     const fetchRunwayStatus = () => {
@@ -41,9 +41,9 @@ function NavBar({onAirportChange, selectedAirport}) {
             <option value="KORD">KORD</option>
             <option value="KSFO">KSFO</option>
           </select>
-          <select className="bg-gray-700 text-sm px-3 py-1 rounded-md">
+          <select onChange={(e) => onRunwayChange(e.target.value)} className="bg-gray-700 text-sm px-3 py-1 rounded-md">
             <option value="">{error ? "Error encountered" : fetchRunwayStatus()}</option>
-            {data?.data?.map((runway, index) => (
+            {runwayData?.data?.map((runway, index) => (
               <option key={index} value={runway}>{runway}</option>
             ))}
           </select>
