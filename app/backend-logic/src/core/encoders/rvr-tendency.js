@@ -23,9 +23,9 @@ class RvrTendencyEncode {
         ]
 
         // capitalize input
-        const rvrTendencyCapitalized = rvrTendency.charAt(0).toUpperCase() + rvrTendency.slice(1)
+        // const rvrTendencyCapitalized = rvrTendency.charAt(0).toUpperCase() + rvrTendency.slice(1)
 
-        const encodedRvrTendency = FeatureUtils.oneHotEncode("rvr_tendency", rvrTendencies, rvrTendencyCapitalized)
+        const encodedRvrTendency = FeatureUtils.oneHotEncode("rvr_tendency", rvrTendencies, rvrTendency)
 
         return {
             mappedCategories: encodedRvrTendency.mappedCategories

@@ -2,6 +2,7 @@ const AirportEncode = require("../core/encoders/airport");
 const RunwayEncode = require("../core/encoders/runway");
 const RvrTendencyEncode = require("../core/encoders/rvr-tendency");
 const WeatherEncode = require("../core/encoders/weather");
+const PreprocessRawInput = require("../core/preprocess");
 const DataMapper = require("../utils/data-mapper");
 const validateData = require("../validation/input.schema");
 const axios = require('axios');
@@ -12,19 +13,15 @@ class PredictController {
             const { debug } = req.query
 
             const requiredData = {
-                visibility: Math.round(req.body.visibility * 10) / 10,
-                wind_speed: Math.round(req.body.wind_speed * 10) / 10,
-                wind_gust: Math.round(req.body.wind_gust * 10) / 10,
-                wind_direction: Math.round(req.body.wind_direction * 10) / 10,
-                rvr: Math.round(req.body.rvr * 10) / 10,
-                headwind: Math.round(req.body.headwind * 10) / 10,
-                crosswind: Math.round(req.body.crosswind * 10) / 10,
-                ceiling: Math.round(req.body.ceiling * 10) / 10,
+                visibility: parseInt(req.body.visibility),
+                wind_speed: parseInt(req.body.wind_speed),
+                wind_gust: parseInt(req.body.wind_gust),
+                wind_direction: parseInt(req.body.wind_direction),
+                rvr: req.body.rvr,
+                ceiling: parseInt(req.body.ceiling),
                 airport_icao: req.body.airport_icao.toUpperCase(),
-                runway_designator_side: req.body.runway_designator_side.toUpperCase(),
+                runway_designator: req.body.runway_designator.toUpperCase(),
                 weather_phenomenon: req.body.weather_phenomenon.toUpperCase(),
-                runway_designator_number: req.body.runway_designator_number,
-                rvr_tendency: req.body.rvr_tendency,
                 runway_ils_category: req.body.runway_ils_category.toUpperCase(),
             }
 
@@ -37,11 +34,16 @@ class PredictController {
                 }
             }
 
+            const preprocessRawInput = new PreprocessRawInput(requiredData.runway_designator)
+            const preprocessRvr = PreprocessRawInput.separateRvrComponents(requiredData.rvr)
+            const preprocessWind = preprocessRawInput._calculateWindComponents(requiredData.wind_speed, requiredData.wind_direction)
+            const preprocessRunway = preprocessRawInput._separateRunwayComponents()
+
             const airportIcaoData = AirportEncode.airportOneHotEncode(requiredData.airport_icao);
-            const runwayDesignatorSideData = RunwayEncode.runwayDesignatorSideOneHotEncode(requiredData.runway_designator_side)
+            const runwayDesignatorSideData = RunwayEncode.runwayDesignatorSideOneHotEncode(preprocessRunway.runway_designator_side)
             const weatherPhenomenaData =  WeatherEncode.weatherOneHotEncode(requiredData.weather_phenomenon)
-            const runwayDesignatorNumberData = RunwayEncode.runwayDesignatorNumberOneHotEncode(requiredData.runway_designator_number)
-            const rvrTendencyData = RvrTendencyEncode.rvrTendencyOneHotEncode(requiredData.rvr_tendency)
+            const runwayDesignatorNumberData = RunwayEncode.runwayDesignatorNumberOneHotEncode(preprocessRunway.runway_designator_number)
+            const rvrTendencyData = RvrTendencyEncode.rvrTendencyOneHotEncode(preprocessRvr.rvr_tendency)
             const runwayIlsCategoryData = RunwayEncode.runwayIlsCategoryOneHotEncode(requiredData.runway_ils_category)
 
             const mappedAirportIcaoData = DataMapper.mapOneHotEncodedData(airportIcaoData);
@@ -53,8 +55,8 @@ class PredictController {
 
             const features = []
             features.push(requiredData.visibility, requiredData.wind_speed, requiredData.wind_gust, 
-                requiredData.wind_direction, requiredData.rvr, requiredData.headwind, 
-                requiredData.crosswind, requiredData.ceiling, ...mappedAirportIcaoData, ...mappedRunwayDesignatorSideData,
+                requiredData.wind_direction, preprocessRvr.rvr, preprocessWind.headwind, 
+                preprocessWind.crosswind, requiredData.ceiling, ...mappedAirportIcaoData, ...mappedRunwayDesignatorSideData,
             ...mappedWeatherPhenomenaData, ...mappedRunwayDesignatorNumberData, ...mappedRvrTendencyData, 
             ...mappedRunwayIlsCategoryData)
 
@@ -73,20 +75,41 @@ class PredictController {
                 };
             })
 
-            /* will use this later */
-            // sendInputData.probabilities.forEach((proba, index, probas) => {
-            //     probas[index] = proba * 100
-            // })
+            let predictionResults = []
+            for(let i = 0; i < sendInputData.probabilities.length; i++){
+                let approachType;
+                switch(i){
+                    case 0:
+                        approachType = "ILS";
+                        break;
+                    case 1:
+                        approachType = "RNAV";
+                        break;
+                    case 2:
+                        approachType = "RNP";
+                        break;
+                    case 3:
+                        approachType = "Visual";
+                        break;
+                }
 
-            // if(!debug){
-                
-            // }
+                let results = {
+                        approach_type: approachType,
+                        prediction: sendInputData.prediction[0][i],
+                        probability: sendInputData.probabilities[i],
+                }
+                predictionResults.push(results)
+            }
+            // sort by probability in descending order
+            predictionResults.sort((a, b) => b.probability - a.probability)
 
             return res.json({
                 status: 'success',
                 message: `Valid input`,
-                model_output: sendInputData,
-                input_data: debug === "true" ? {
+                model_output: {
+                    paired_results: predictionResults
+                },
+                input_data: debug === "true" ? { // "true" value in debug query parameter will show input values
                     processed: {
                         features
                     },
@@ -106,7 +129,7 @@ class PredictController {
                         rvr_tendency: rvrTendencyData.mappedCategories,
                         runway_ils_category: runwayIlsCategoryData.mappedCategories,
                     }
-                } : {}
+                } : null
             })
         }
         catch(err){
