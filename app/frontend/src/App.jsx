@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import AxiosInstance from "./api/AxiosInstance";
 import NavBar from "./components/navbar";
 import LeftSideBar from "./components/leftsidebar";
+import MapPanel from "./components/MapPanel";
 import RightSideBar from "./components/RightSidebar";
 
 function PredictionDashboardPage() {
@@ -56,10 +57,6 @@ function PredictionDashboardPage() {
       </div>
     </div>
   );
-}
-
-function MapPanel() {
-  return <div></div>;
 }
 
 function App() {

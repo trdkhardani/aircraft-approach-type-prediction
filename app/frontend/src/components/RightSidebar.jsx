@@ -63,7 +63,7 @@ function ApproachRecommendation({selectedAirport, selectedRunway, metarData, rvr
             <p className="text-sm text-gray-300">{predictionData?.model_output?.paired_results[3]?.approach_type}</p>
             <p className="text-sm text-white-300">{predictionData?.model_output?.paired_results[3]?.probability * 100}%</p>
         </div>
-        <button onClick={handleClick} className="bg-dark-400 hover:bg-dark-600 justify-center">PREDICT</button>
+        <button onClick={handleClick} className="bg-white-400 hover:bg-white-600 justify-center">PREDICT</button>
         <div id="debug">
             <p>{inputData.visibility}</p>
             <p>{inputData.wind_speed}</p>
