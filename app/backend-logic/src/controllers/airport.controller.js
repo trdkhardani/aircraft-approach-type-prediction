@@ -132,10 +132,10 @@ class AirportController {
         }
     }
 
-    static async getRunways(req, res, next){
+    static async getAirportInfo(req, res, next){
         const airportIcao = req.params.airportIcao.toUpperCase();
         let isCached = false;
-        const key = `runways:${airportIcao}`
+        const key = `airport:${airportIcao}`
 
         redisConnect();
 
@@ -145,12 +145,12 @@ class AirportController {
                 isCached = true;
                 console.log("Cache hit")
 
-                const cachedRunwayData = JSON.parse(cacheResults)
+                const cachedAirportData = JSON.parse(cacheResults)
 
                 return res.json({
                     status: 'success',
                     from_cache: isCached,
-                    data: cachedRunwayData
+                    airport_data: cachedAirportData
                 })
             }
 
@@ -173,20 +173,31 @@ class AirportController {
             const runwayIdentifiers = airportInfo.data.runways.map((runway) => {
                 return {
                     le: runway.le_ident,
+                    le_latitude: parseFloat(runway.le_latitude_deg),
+                    le_longitude: parseFloat(runway.le_longitude_deg),
                     he: runway.he_ident,
+                    he_latitude: parseFloat(runway.he_latitude_deg),
+                    he_longitude: parseFloat(runway.he_longitude_deg),
                 }
             })
 
-            const allRunwayDesignators = runwayIdentifiers.flatMap(runway => Object.values(runway))
+            // const allRunwayDesignators = runwayIdentifiers.flatMap(runway => Object.values(runway))
+            const airportData = {
+                icao: airportInfo.data.icao_code,
+                name: airportInfo.data.name,
+                latitude: airportInfo.data.latitude_deg,
+                longitude: airportInfo.data.longitude_deg,
+                runways: runwayIdentifiers
+            } 
 
-            await redisClient.set(key, JSON.stringify(allRunwayDesignators), {
+            await redisClient.set(key, JSON.stringify(airportData), {
                 EX: 5400
             })
 
             return res.json({
                 status: 'success',
                 from_cache: isCached,
-                data: allRunwayDesignators 
+                airport_data: airportData 
             })
         } catch(err) {
             if(err.statusCode){

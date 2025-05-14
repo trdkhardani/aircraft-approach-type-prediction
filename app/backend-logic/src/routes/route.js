@@ -12,6 +12,6 @@ app.post("/api/predict", PredictController.dataInput)
 
 app.get("/api/metar/:airportIcao", AirportController.getMetar)
 app.get("/api/rvr/:airportIcao", AirportController.getRvr)
-app.get("/api/runway/:airportIcao", AirportController.getRunways)
+app.get("/api/airport/:airportIcao", AirportController.getAirportInfo)
 
 module.exports = app;
