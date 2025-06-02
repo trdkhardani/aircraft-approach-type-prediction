@@ -1,7 +1,7 @@
 // import { useEffect, useState } from "react";
 import axios from "axios";
 
-// const BACKEND_API_URL = import.meta.env.BACKEND_API_URL;
+const VITE_BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
 class AxiosInstance {
     constructor(setLoading, setError){
@@ -11,7 +11,7 @@ class AxiosInstance {
     }
 
     fetchMetar(airportIcao, setMetarData){
-        axios.get(`http://localhost:3000/api/metar/${airportIcao}`, {
+        axios.get(`${VITE_BACKEND_API_URL}/api/metar/${airportIcao}`, {
             headers: {
                 'Content-Type': "application/json"
             },
@@ -27,7 +27,7 @@ class AxiosInstance {
     }
 
     fetchRvr(airportIcao, setRvrData){
-        axios.get(`http://localhost:3000/api/rvr/${airportIcao}`, {
+        axios.get(`${VITE_BACKEND_API_URL}/api/rvr/${airportIcao}`, {
             headers: {
                 'Content-Type': "application/json"
             },
@@ -42,14 +42,14 @@ class AxiosInstance {
         })
     }
 
-    fetchRunway(airportIcao, setRunwayData){
-        axios.get(`http://localhost:3000/api/runway/${airportIcao}`, {
+    fetchAirport(airportIcao, setAirportData){
+        axios.get(`${VITE_BACKEND_API_URL}/api/airport/${airportIcao}`, {
             headers: {
                 'Content-Type': "application/json"
             },
         })
         .then((response) => {
-            setRunwayData(response.data)
+            setAirportData(response.data)
             this.setLoading(false)
         })
         .catch((err) => {
@@ -59,7 +59,7 @@ class AxiosInstance {
     }
 
     predict(inputData, setPredictionData) {
-        axios.post(`http://localhost:3000/api/predict`, inputData, {
+        axios.post(`${VITE_BACKEND_API_URL}/api/predict/with-airport`, inputData, {
             headers: {
                 'Content-Type': "application/json"
             }

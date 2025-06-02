@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
@@ -13,8 +13,11 @@ function PredictionDashboardPage() {
   const [selectedAirport, setSelectedAirport] = useState("");
   const [selectedRunway, setSelectedRunway] = useState("");
 
+  const mapRef = useRef();
+
   const [metarData, setMetarData] = useState([]);
   const [rvrData, setRvrData] = useState([]);
+  const [airportData, setAirportData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,6 +29,7 @@ function PredictionDashboardPage() {
     const axiosInstance = new AxiosInstance(setLoading, setError);
     axiosInstance.fetchMetar(selectedAirport, setMetarData);
     axiosInstance.fetchRvr(selectedAirport, setRvrData);
+    axiosInstance.fetchAirport(selectedAirport, setAirportData)
   }, [selectedAirport, selectedRunway]);
 
   return (
@@ -34,6 +38,8 @@ function PredictionDashboardPage() {
         onAirportChange={setSelectedAirport}
         onRunwayChange={setSelectedRunway}
         selectedAirport={selectedAirport}
+        mapRef={mapRef}
+        airportData={airportData}
       />
       <div className="flex h-screen">
         <LeftSideBar
@@ -44,7 +50,7 @@ function PredictionDashboardPage() {
           error={error}
         />
         <main className="flex-1 bg-gray-100 p-6">
-          <MapPanel />
+          <MapPanel airportData={airportData} mapRef={mapRef}/>
         </main>
         <RightSideBar
           selectedAirport={selectedAirport}
@@ -53,6 +59,7 @@ function PredictionDashboardPage() {
           rvrData={rvrData}
           loading={loading}
           error={error}
+          airportData={airportData}
         />
       </div>
     </div>
