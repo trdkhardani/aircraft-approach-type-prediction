@@ -28,6 +28,10 @@ const runway_designator_number = [
         binary: 0,
     },
     {
+        value: "12",
+        binary: 0,
+    },
+    {
         value: "13",
         binary: 0,
     },

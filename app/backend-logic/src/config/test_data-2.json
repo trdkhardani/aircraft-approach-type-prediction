@@ -1,0 +1,76 @@
+{
+	"status": "success",
+	"page": 11727,
+	"limit": 1,
+	"total_atis_data": 11909,
+	"total_rvr_data": 115124,
+	"airport_info": [
+		{
+			"airport": "KSFO",
+			"atis_id": 11732,
+			"atis": "SFO ATIS INFO V 2356Z. 24019KT 10SM FEW010 BKN018 BKN200 14/09 A2998 (TWO NINER NINER EIGHT). SIMUL CHARTED VISUAL FLIGHT PROCEDURES RWYS 28R AND 28L APP IN USE. DEPG RWYS 28L, 28R. DEPG ACFT GET NMBRS AND BRIEF BOTH RWYS 28L AND 28R. TWY F CLSD BTN RWY 28L AND TWY F2, DEPT AIRCRAFT GET NUMBERS FOR RWY 28L AT F2. BIRD ACTIVITY IN VCY OF AP. DUE TO TAXIWAY CLOSURE, PLAN RWY28L AT F2 OR RWY28R FULL LENGTH. ...ADVS YOU HAVE INFO V.",
+			"atis_added_at": {
+				"raw": "2025-05-24T00:23:26.022Z",
+				"formatted": "Sat, 24 May 2025 00:23 GMT"
+			},
+			"rvr_info": [
+				{
+					"runway_rvr_id": 113345,
+					"airport_id": 5,
+					"runway_code": "01L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-24T00:23:26.007Z"
+				},
+				{
+					"runway_rvr_id": 113347,
+					"airport_id": 5,
+					"runway_code": "01R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-24T00:23:26.011Z"
+				},
+				{
+					"runway_rvr_id": 113349,
+					"airport_id": 5,
+					"runway_code": "10L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-24T00:23:26.014Z"
+				},
+				{
+					"runway_rvr_id": 113351,
+					"airport_id": 5,
+					"runway_code": "10R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-24T00:23:26.015Z"
+				},
+				{
+					"runway_rvr_id": 113353,
+					"airport_id": 5,
+					"runway_code": "19L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-24T00:23:26.016Z"
+				},
+				{
+					"runway_rvr_id": 113355,
+					"airport_id": 5,
+					"runway_code": "19R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-24T00:23:26.018Z"
+				},
+				{
+					"runway_rvr_id": 113357,
+					"airport_id": 5,
+					"runway_code": "28L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-24T00:23:26.019Z"
+				},
+				{
+					"runway_rvr_id": 113359,
+					"airport_id": 5,
+					"runway_code": "28R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-24T00:23:26.020Z"
+				}
+			]
+		}
+	]
+}

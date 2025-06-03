@@ -1,66 +1,78 @@
 const weather_phenomenon = [
     {
-        value: "+ RA",
+        value: "+RA",
         binary: 0,
     },
     {
-        value: "+ RA BR",
+        value: "+RA BR",
         binary: 0,
     },
     {
-        value: "+ TS RA BR",
+        value: "+TSRA",
         binary: 0,
     },
     {
-        value: "- DZ BR",
+        value: "+TSRA BR",
         binary: 0,
     },
     {
-        value: "- DZ FG",
+        value: "-DZ",
         binary: 0,
     },
     {
-        value: "- RA",
+        value: "-DZ BR",
         binary: 0,
     },
     {
-        value: "- RA BR",
+        value: "-RA",
         binary: 0,
     },
     {
-        value: "- RA HZ",
+        value: "-RA BR",
         binary: 0,
     },
     {
-        value: "- RA PL BR",
+        value: "-RA HZ",
         binary: 0,
     },
     {
-        value: "- RA SN BR",
+        value: "-RAPL BR",
         binary: 0,
     },
     {
-        value: "- SN",
+        value: "-RASN",
         binary: 0,
     },
     {
-        value: "- SN BR",
+        value: "-RASN BR",
         binary: 0,
     },
     {
-        value: "- SN GS BR",
+        value: "-SN",
         binary: 0,
     },
     {
-        value: "- SN PL BR",
+        value: "-SN BR",
         binary: 0,
     },
     {
-        value: "- TS RA",
+        value: "-SNRA BR",
         binary: 0,
     },
     {
-        value: "- TS RA BR",
+        value: "-TSRA",
+        binary: 0,
+    },
+    {
+        value: "-TSRA BR",
+        binary: 0,
+    },
+    {
+        value: "BCFG",
+        binary: 0,
+    },
+    {
+        value: "BCFG BR",
         binary: 0,
     },
     {
@@ -80,10 +92,6 @@ const weather_phenomenon = [
         binary: 0,
     },
     {
-        value: "MI FG",
-        binary: 0,
-    },
-    {
         value: "No Phenomenon",
         binary: 0,
     },
@@ -96,10 +104,6 @@ const weather_phenomenon = [
         binary: 0,
     },
     {
-        value: "SN FZ FG",
-        binary: 0,
-    },
-    {
         value: "TS",
         binary: 0,
     },
@@ -108,11 +112,11 @@ const weather_phenomenon = [
         binary: 0,
     },
     {
-        value: "TS RA BR",
+        value: "TSRA BR",
         binary: 0,
     },
     {
-        value: "VC FG",
+        value: "VCFG",
         binary: 0,
     },
 ]

@@ -1,0 +1,76 @@
+{
+	"status": "success",
+	"page": 11221,
+	"limit": 1,
+	"total_atis_data": 11909,
+	"total_rvr_data": 115124,
+	"airport_info": [
+		{
+			"airport": "KLAX",
+			"atis_id": 11227,
+			"atis": "LAX ATIS INFO H 1153Z. 03003KT 10SM FEW010 FEW016 16/14 A2992 (TWO NINER NINER TWO) RMK AO2 SLP130 T01560139 10178 20150 56003. INST APCHS AND RNAV RNP APCHS RY 24R AND 25L, OR VCTR FOR VISUAL APCH WILL BE PROVIDED, SIMUL VISUAL APCHS TO ALL RWYS ARE IN PROG, SIMUL INSTR DEPARTURES IN PROG RWYS 24 AND 25. CTC L A GC ON 121.75 FOR PUSH OR  TAXI ON A. RWY 2 4 RIGHT SIX LEFT CLSD. TWY C CLSD BTN TWY, L AND TWY B13 , . RY 24R, 25L SFL OTS, PAPI OTS 25L, VENTURA VOR OTS. TAXIWAY C BETWEEN TAXIWAY N AND TAXIWAY B13 RESTRICTED TO AIRCRAFT DESIGN GROUP 5 WINGSPAN LESS THAN 214 FEET. TAXIWAY D BTWN TAXIWAY P AND TAXIWAY W RESTRICTED TO AIRCRAFT DESIGN GROUP 5 WINGSPAN LESS THAN 214 FEET. BIRD ACTIVITY VICINITY ARPT. TWR FREQ FOR ALL RWYS IS 120.95. CD AND GC FREQ IS 121.75. INCLUDE YOUR CALL SIGN IN ALL READBACKS. CAUTION. RUNWAY INCURSIONS HAVE OCCURRED AT TAXIWAYS V, W, AND Y NEAR RWY 24L. PILOTS MUST HOLD SHORT WHEN INSTRUCTED AND READBACK ALL HOLD SHORT CLEARANCES. REMAIN ALERT AND EXERCISE EXTREME CAUTION. ...ADVS YOU HAVE INFO H.",
+			"atis_added_at": {
+				"raw": "2025-05-20T12:23:26.324Z",
+				"formatted": "Tue, 20 May 2025 12:23 GMT"
+			},
+			"rvr_info": [
+				{
+					"runway_rvr_id": 108463,
+					"airport_id": 1,
+					"runway_code": "06L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-20T12:23:26.310Z"
+				},
+				{
+					"runway_rvr_id": 108464,
+					"airport_id": 1,
+					"runway_code": "06R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-20T12:23:26.313Z"
+				},
+				{
+					"runway_rvr_id": 108465,
+					"airport_id": 1,
+					"runway_code": "07L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-20T12:23:26.315Z"
+				},
+				{
+					"runway_rvr_id": 108466,
+					"airport_id": 1,
+					"runway_code": "07R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-20T12:23:26.317Z"
+				},
+				{
+					"runway_rvr_id": 108467,
+					"airport_id": 1,
+					"runway_code": "24L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-20T12:23:26.318Z"
+				},
+				{
+					"runway_rvr_id": 108468,
+					"airport_id": 1,
+					"runway_code": "24R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-20T12:23:26.320Z"
+				},
+				{
+					"runway_rvr_id": 108469,
+					"airport_id": 1,
+					"runway_code": "25L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-20T12:23:26.321Z"
+				},
+				{
+					"runway_rvr_id": 108470,
+					"airport_id": 1,
+					"runway_code": "25R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-20T12:23:26.323Z"
+				}
+			]
+		}
+	]
+}

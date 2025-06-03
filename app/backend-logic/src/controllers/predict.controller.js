@@ -10,15 +10,15 @@ const axios = require('axios');
 class PredictController {
     static async dataInput(req, res, next){
         try {
-            const { debug } = req.query
+            const { debug, airport_feats } = req.query
 
             const requiredData = {
-                visibility: parseInt(req.body.visibility),
+                visibility: parseFloat(req.body.visibility),
                 wind_speed: parseInt(req.body.wind_speed),
                 wind_gust: parseInt(req.body.wind_gust),
                 wind_direction: parseInt(req.body.wind_direction),
                 rvr: req.body.rvr,
-                ceiling: parseInt(req.body.ceiling),
+                ceiling: parseFloat(req.body.ceiling),
                 airport_icao: req.body.airport_icao.toUpperCase(),
                 runway_designator: req.body.runway_designator.toUpperCase(),
                 weather_phenomenon: req.body.weather_phenomenon.toUpperCase(),
@@ -54,13 +54,25 @@ class PredictController {
             const mappedRunwayIlsCategoryData =  DataMapper.mapOneHotEncodedData(runwayIlsCategoryData);
 
             const features = []
-            features.push(requiredData.visibility, requiredData.wind_speed, requiredData.wind_gust, 
+            let modelPredictionEndpoint;
+            if(airport_feats.toLowerCase() === "true"){
+                // if airport_feats is "true", add weather-related and airport-related features as input
+                modelPredictionEndpoint = `${process.env.MODEL_URL}/predict/with-airport-feats`
+                features.push(requiredData.visibility, requiredData.wind_speed, requiredData.wind_gust, 
+                    requiredData.wind_direction, preprocessRvr.rvr, preprocessWind.headwind, 
+                    preprocessWind.crosswind, requiredData.ceiling, ...mappedAirportIcaoData, ...mappedRunwayDesignatorSideData,
+                ...mappedWeatherPhenomenaData, ...mappedRunwayDesignatorNumberData, ...mappedRvrTendencyData, 
+                ...mappedRunwayIlsCategoryData) 
+            } else {
+                // if airport_feats is not "true", add only weather-related features as input and airport-related features would be ignored
+                modelPredictionEndpoint = `${process.env.MODEL_URL}/predict/no-airport-feats`
+                features.push(requiredData.visibility, requiredData.wind_speed, requiredData.wind_gust, 
                 requiredData.wind_direction, preprocessRvr.rvr, preprocessWind.headwind, 
-                preprocessWind.crosswind, requiredData.ceiling, ...mappedAirportIcaoData, ...mappedRunwayDesignatorSideData,
-            ...mappedWeatherPhenomenaData, ...mappedRunwayDesignatorNumberData, ...mappedRvrTendencyData, 
-            ...mappedRunwayIlsCategoryData)
+                preprocessWind.crosswind, requiredData.ceiling, ...mappedWeatherPhenomenaData, 
+                ...mappedRvrTendencyData)
+            }
 
-            const sendInputData = await axios.post(`${process.env.MODEL_URL}/predict`, {
+            const sendInputData = await axios.post(`${modelPredictionEndpoint}`, {
                 features: features
             })
             .then((response) => {

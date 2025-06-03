@@ -1,0 +1,76 @@
+{
+	"status": "success",
+	"page": 11412,
+	"limit": 1,
+	"total_atis_data": 11909,
+	"total_rvr_data": 115124,
+	"airport_info": [
+		{
+			"airport": "KJFK",
+			"atis_id": 11418,
+			"atis": "JFK ATIS INFO D 1851Z. 11014G23KT 10SM SCT019 OVC027 12/08 A3000 (THREE ZERO ZERO ZERO) RMK AO2 RAE1758. APPROACH IN USE ILS RY 4R, ILS RY 4L. DEPG RY 4L. NOTAMS, . RWY 4R/22L INNER MARKER OTS. BIRD ACTIVITY VICINITY ARPT. NUM CRANES OPERATING AT JFK. READBACK ALL RWY ASSIGNMENTS AND HOLD SHORT INSTRUCTIONS. ...ADVS YOU HAVE INFO D.",
+			"atis_added_at": {
+				"raw": "2025-05-21T19:23:26.362Z",
+				"formatted": "Wed, 21 May 2025 19:23 GMT"
+			},
+			"rvr_info": [
+				{
+					"runway_rvr_id": 110311,
+					"airport_id": 6,
+					"runway_code": "04L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-21T19:23:26.350Z"
+				},
+				{
+					"runway_rvr_id": 110312,
+					"airport_id": 6,
+					"runway_code": "04R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-21T19:23:26.352Z"
+				},
+				{
+					"runway_rvr_id": 110313,
+					"airport_id": 6,
+					"runway_code": "13L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-21T19:23:26.354Z"
+				},
+				{
+					"runway_rvr_id": 110314,
+					"airport_id": 6,
+					"runway_code": "13R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-21T19:23:26.356Z"
+				},
+				{
+					"runway_rvr_id": 110315,
+					"airport_id": 6,
+					"runway_code": "22L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-21T19:23:26.357Z"
+				},
+				{
+					"runway_rvr_id": 110316,
+					"airport_id": 6,
+					"runway_code": "22R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-21T19:23:26.358Z"
+				},
+				{
+					"runway_rvr_id": 110317,
+					"airport_id": 6,
+					"runway_code": "31L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-21T19:23:26.360Z"
+				},
+				{
+					"runway_rvr_id": 110318,
+					"airport_id": 6,
+					"runway_code": "31R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-21T19:23:26.361Z"
+				}
+			]
+		}
+	]
+}

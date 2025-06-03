@@ -1,0 +1,132 @@
+{
+	"status": "success",
+	"page": 11670,
+	"limit": 1,
+	"total_atis_data": 11909,
+	"total_rvr_data": 115124,
+	"airport_info": [
+		{
+			"airport": "KORD",
+			"atis_id": 11676,
+			"atis": "ORD ATIS INFO N 1451Z. 03003KT 10SM FEW030 FEW095 13/06 A3007 (THREE ZERO ZERO SEVEN) RMK AO2 SLP185 T01280061 53013. ARR EXP VECTORS ILS RWY 28C APCH, VISUAL APCH RWY 27C, VISUAL APCH RWY 27R. SIMUL APCHS IN USE. LAND AND HOLD SHORT OPERATIONS ARE IN EFFECT. RWY 27C ARR PLAN TO H/S OF TWY V V, 9 THSD 7 HND 25 FT AVBL, RWY 28C ARR PLAN TO H/S OF TWY Z, 9 THSD 6 HND TEN FT AVBL. DEPS EXP RWYS 22L 28R FROM NOVEMBER 5 9750 FT AVL. RWY 4L, 22R CLSD. TWY A CLSD BTN TWY, A13 AND TWY A15 ;. RWY 10R OFFSET GS OTS, RWY 10R ALS OTS, RWY 9L PAPI OTS, RWY 27R PAPI OTS. PILOTS USE CTN FOR BIRD ACTIVITY IN THE VICINITY OF THE ARPT. USE CTN FOR PERSONNEL AND EQUIP AT NUMEROUS SITES ON THE FIELD. AUTHORIZED DRONE ACTIVITY, OVER TERMINAL FIVE, , 150 FEET. READBACK ALL RWY HOLD SHORT INSTRUCTIONS. WHEN READY TO TAXI CONTACT GND METERING ON FREQ 121.67. ...ADVS YOU HAVE INFO N.",
+			"atis_added_at": {
+				"raw": "2025-05-23T15:23:25.958Z",
+				"formatted": "Fri, 23 May 2025 15:23 GMT"
+			},
+			"rvr_info": [
+				{
+					"runway_rvr_id": 112805,
+					"airport_id": 4,
+					"runway_code": "04L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.936Z"
+				},
+				{
+					"runway_rvr_id": 112806,
+					"airport_id": 4,
+					"runway_code": "04R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.939Z"
+				},
+				{
+					"runway_rvr_id": 112807,
+					"airport_id": 4,
+					"runway_code": "09C",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.940Z"
+				},
+				{
+					"runway_rvr_id": 112808,
+					"airport_id": 4,
+					"runway_code": "09L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.942Z"
+				},
+				{
+					"runway_rvr_id": 112809,
+					"airport_id": 4,
+					"runway_code": "09R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.943Z"
+				},
+				{
+					"runway_rvr_id": 112810,
+					"airport_id": 4,
+					"runway_code": "10C",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.944Z"
+				},
+				{
+					"runway_rvr_id": 112811,
+					"airport_id": 4,
+					"runway_code": "10L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.946Z"
+				},
+				{
+					"runway_rvr_id": 112812,
+					"airport_id": 4,
+					"runway_code": "10R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.947Z"
+				},
+				{
+					"runway_rvr_id": 112813,
+					"airport_id": 4,
+					"runway_code": "22L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.948Z"
+				},
+				{
+					"runway_rvr_id": 112814,
+					"airport_id": 4,
+					"runway_code": "22R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.949Z"
+				},
+				{
+					"runway_rvr_id": 112815,
+					"airport_id": 4,
+					"runway_code": "27C",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.951Z"
+				},
+				{
+					"runway_rvr_id": 112816,
+					"airport_id": 4,
+					"runway_code": "27L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.952Z"
+				},
+				{
+					"runway_rvr_id": 112817,
+					"airport_id": 4,
+					"runway_code": "27R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.953Z"
+				},
+				{
+					"runway_rvr_id": 112818,
+					"airport_id": 4,
+					"runway_code": "28C",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.954Z"
+				},
+				{
+					"runway_rvr_id": 112819,
+					"airport_id": 4,
+					"runway_code": "28L",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.955Z"
+				},
+				{
+					"runway_rvr_id": 112820,
+					"airport_id": 4,
+					"runway_code": "28R",
+					"rvr": ">6000 ",
+					"rvr_added_at": "2025-05-23T15:23:25.956Z"
+				}
+			]
+		}
+	]
+}
