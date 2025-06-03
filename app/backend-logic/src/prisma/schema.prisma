@@ -7,9 +7,43 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model prediction_logs {
+  prediction_log_id String @id @default(uuid())
+  prediction_log_airport_icao String? @db.Char(4)
+  prediction_log_visibility Float
+  prediction_log_wind_speed Int
+  prediction_log_wind_gust Int
+  prediction_log_wind_direction Int
+  prediction_log_rvr String @db.Char(6)
+  prediction_log_runway_designator_number String? @db.Char(2)
+  prediction_log_runway_designator_side String? @db.Char(1)
+  prediction_log_runway_ils_category String? @db.VarChar(20) @default("None")
+  prediction_log_headwind Float
+  prediction_log_crosswind Float
+  prediction_log_ceiling Int
+  prediction_log_weather_phenomenon String @db.Char(6)
+  prediction_log_ils_label Int
+  prediction_log_rnav_label Int
+  prediction_log_rnp_label Int
+  prediction_log_visual_label Int
+  prediction_inaccuracies prediction_inaccuracies? // one-to-one
+}
+
+model prediction_inaccuracies {
+  prediction_inaccuracy_id String @id @default(uuid())
+  prediction_log_id String @unique
+  prediction_inaccuracy_supposed_ils_label Int
+  prediction_inaccuracy_supposed_rnav_label Int
+  prediction_inaccuracy_supposed_rnp_label Int
+  prediction_inaccuracy_supposed_visual_label Int
+  // prediction_log prediction_logs @relation(fields: [prediction_log_id], references: [prediction_log_id])
+  prediction_log prediction_logs @relation(fields: [prediction_log_id], references: [prediction_log_id])
 }

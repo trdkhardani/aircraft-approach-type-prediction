@@ -120,9 +120,55 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.Prediction_logsScalarFieldEnum = {
+  prediction_log_id: 'prediction_log_id',
+  prediction_log_airport_icao: 'prediction_log_airport_icao',
+  prediction_log_visibility: 'prediction_log_visibility',
+  prediction_log_wind_speed: 'prediction_log_wind_speed',
+  prediction_log_wind_gust: 'prediction_log_wind_gust',
+  prediction_log_wind_direction: 'prediction_log_wind_direction',
+  prediction_log_rvr: 'prediction_log_rvr',
+  prediction_log_runway_designator_number: 'prediction_log_runway_designator_number',
+  prediction_log_runway_designator_side: 'prediction_log_runway_designator_side',
+  prediction_log_runway_ils_category: 'prediction_log_runway_ils_category',
+  prediction_log_headwind: 'prediction_log_headwind',
+  prediction_log_crosswind: 'prediction_log_crosswind',
+  prediction_log_ceiling: 'prediction_log_ceiling',
+  prediction_log_weather_phenomenon: 'prediction_log_weather_phenomenon',
+  prediction_log_ils_label: 'prediction_log_ils_label',
+  prediction_log_rnav_label: 'prediction_log_rnav_label',
+  prediction_log_rnp_label: 'prediction_log_rnp_label',
+  prediction_log_visual_label: 'prediction_log_visual_label'
+};
+
+exports.Prisma.Prediction_inaccuraciesScalarFieldEnum = {
+  prediction_inaccuracy_id: 'prediction_inaccuracy_id',
+  prediction_log_id: 'prediction_log_id',
+  prediction_inaccuracy_supposed_ils_label: 'prediction_inaccuracy_supposed_ils_label',
+  prediction_inaccuracy_supposed_rnav_label: 'prediction_inaccuracy_supposed_rnav_label',
+  prediction_inaccuracy_supposed_rnp_label: 'prediction_inaccuracy_supposed_rnp_label',
+  prediction_inaccuracy_supposed_visual_label: 'prediction_inaccuracy_supposed_visual_label'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-
+  prediction_logs: 'prediction_logs',
+  prediction_inaccuracies: 'prediction_inaccuracies'
 };
 
 /**

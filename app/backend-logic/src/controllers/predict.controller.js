@@ -1,3 +1,6 @@
+const { PrismaClient} = require('../generated/prisma/client')
+const prisma = new PrismaClient()
+
 const AirportEncode = require("../core/encoders/airport");
 const RunwayEncode = require("../core/encoders/runway");
 const RvrTendencyEncode = require("../core/encoders/rvr-tendency");
@@ -115,10 +118,34 @@ class PredictController {
             // sort by probability in descending order
             predictionResults.sort((a, b) => b.probability - a.probability)
 
+            // log/save prediction variables and results
+            const logPredictionResults = await prisma.prediction_logs.create({
+                data: {
+                    prediction_log_airport_icao: airport_feats.toLowerCase() === "true" ? requiredData.airport_icao : null,
+                    prediction_log_runway_designator_number: airport_feats.toLowerCase() === "true" ? preprocessRunway.runway_designator_number : null,
+                    prediction_log_runway_designator_side: airport_feats.toLowerCase() === "true" ? preprocessRunway.runway_designator_side : null,
+                    prediction_log_runway_ils_category: airport_feats.toLowerCase() === "true" ? requiredData.runway_ils_category : null,
+                    prediction_log_visibility: requiredData.visibility,
+                    prediction_log_wind_speed: requiredData.wind_speed,
+                    prediction_log_wind_gust: requiredData.wind_speed,
+                    prediction_log_wind_direction: requiredData.wind_direction,
+                    prediction_log_rvr: requiredData.rvr,
+                    prediction_log_headwind: preprocessWind.headwind,
+                    prediction_log_crosswind: preprocessWind.crosswind,
+                    prediction_log_ceiling: requiredData.ceiling,
+                    prediction_log_weather_phenomenon: requiredData.weather_phenomenon,
+                    prediction_log_ils_label: sendInputData.prediction[0][0],
+                    prediction_log_rnav_label: sendInputData.prediction[0][1],
+                    prediction_log_rnp_label: sendInputData.prediction[0][2],
+                    prediction_log_visual_label: sendInputData.prediction[0][3],
+                }
+            })
+
             return res.json({
                 status: 'success',
                 message: `Valid input`,
                 model_output: {
+                    prediction_log_id: logPredictionResults.prediction_log_id,
                     paired_results: predictionResults
                 },
                 input_data: debug === "true" ? { // "true" value in debug query parameter will show input values

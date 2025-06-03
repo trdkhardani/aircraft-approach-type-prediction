@@ -92,9 +92,55 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.Prediction_logsScalarFieldEnum = {
+  prediction_log_id: 'prediction_log_id',
+  prediction_log_airport_icao: 'prediction_log_airport_icao',
+  prediction_log_visibility: 'prediction_log_visibility',
+  prediction_log_wind_speed: 'prediction_log_wind_speed',
+  prediction_log_wind_gust: 'prediction_log_wind_gust',
+  prediction_log_wind_direction: 'prediction_log_wind_direction',
+  prediction_log_rvr: 'prediction_log_rvr',
+  prediction_log_runway_designator_number: 'prediction_log_runway_designator_number',
+  prediction_log_runway_designator_side: 'prediction_log_runway_designator_side',
+  prediction_log_runway_ils_category: 'prediction_log_runway_ils_category',
+  prediction_log_headwind: 'prediction_log_headwind',
+  prediction_log_crosswind: 'prediction_log_crosswind',
+  prediction_log_ceiling: 'prediction_log_ceiling',
+  prediction_log_weather_phenomenon: 'prediction_log_weather_phenomenon',
+  prediction_log_ils_label: 'prediction_log_ils_label',
+  prediction_log_rnav_label: 'prediction_log_rnav_label',
+  prediction_log_rnp_label: 'prediction_log_rnp_label',
+  prediction_log_visual_label: 'prediction_log_visual_label'
+};
+
+exports.Prisma.Prediction_inaccuraciesScalarFieldEnum = {
+  prediction_inaccuracy_id: 'prediction_inaccuracy_id',
+  prediction_log_id: 'prediction_log_id',
+  prediction_inaccuracy_supposed_ils_label: 'prediction_inaccuracy_supposed_ils_label',
+  prediction_inaccuracy_supposed_rnav_label: 'prediction_inaccuracy_supposed_rnav_label',
+  prediction_inaccuracy_supposed_rnp_label: 'prediction_inaccuracy_supposed_rnp_label',
+  prediction_inaccuracy_supposed_visual_label: 'prediction_inaccuracy_supposed_visual_label'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-
+  prediction_logs: 'prediction_logs',
+  prediction_inaccuracies: 'prediction_inaccuracies'
 };
 /**
  * Create the Client
@@ -118,6 +164,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -134,22 +184,21 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://postgres.oamvprurmwezpuyuhmik:TCo~F2%2C2x%2B-@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n",
-  "inlineSchemaHash": "99605b976d14dee99c394828b1c2a62deafc51a4fda3251761a240d4cc88e515",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel prediction_logs {\n  prediction_log_id                       String                   @id @default(uuid())\n  prediction_log_airport_icao             String?                  @db.Char(4)\n  prediction_log_visibility               Float\n  prediction_log_wind_speed               Int\n  prediction_log_wind_gust                Int\n  prediction_log_wind_direction           Int\n  prediction_log_rvr                      String                   @db.Char(6)\n  prediction_log_runway_designator_number String?                  @db.Char(2)\n  prediction_log_runway_designator_side   String?                  @db.Char(1)\n  prediction_log_runway_ils_category      String?                  @default(\"None\") @db.VarChar(20)\n  prediction_log_headwind                 Float\n  prediction_log_crosswind                Float\n  prediction_log_ceiling                  Int\n  prediction_log_weather_phenomenon       String                   @db.Char(6)\n  prediction_log_ils_label                Int\n  prediction_log_rnav_label               Int\n  prediction_log_rnp_label                Int\n  prediction_log_visual_label             Int\n  prediction_inaccuracies                 prediction_inaccuracies? // one-to-one\n}\n\nmodel prediction_inaccuracies {\n  prediction_inaccuracy_id                    String          @id @default(uuid())\n  prediction_log_id                           String          @unique\n  prediction_inaccuracy_supposed_ils_label    Int\n  prediction_inaccuracy_supposed_rnav_label   Int\n  prediction_inaccuracy_supposed_rnp_label    Int\n  prediction_inaccuracy_supposed_visual_label Int\n  // prediction_log prediction_logs @relation(fields: [prediction_log_id], references: [prediction_log_id])\n  prediction_log                              prediction_logs @relation(fields: [prediction_log_id], references: [prediction_log_id])\n}\n",
+  "inlineSchemaHash": "e0d7e2752ffdfd1f166e4aa24d61446edb0bac674d80731fb4e0cbab1c19cf7c",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"prediction_logs\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"prediction_log_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":null,\"default\":{\"name\":\"uuid\",\"args\":[4]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_airport_icao\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":[\"Char\",[\"4\"]],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_visibility\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Float\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_wind_speed\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_wind_gust\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_wind_direction\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_rvr\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":[\"Char\",[\"6\"]],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_runway_designator_number\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":[\"Char\",[\"2\"]],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_runway_designator_side\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":[\"Char\",[\"1\"]],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_runway_ils_category\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":[\"VarChar\",[\"20\"]],\"default\":\"None\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_headwind\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Float\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_crosswind\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Float\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_ceiling\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_weather_phenomenon\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":[\"Char\",[\"6\"]],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_ils_label\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_rnav_label\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_rnp_label\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_visual_label\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_inaccuracies\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"prediction_inaccuracies\",\"nativeType\":null,\"relationName\":\"prediction_inaccuraciesToprediction_logs\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"prediction_inaccuracies\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"prediction_inaccuracy_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":null,\"default\":{\"name\":\"uuid\",\"args\":[4]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":true,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_inaccuracy_supposed_ils_label\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_inaccuracy_supposed_rnav_label\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_inaccuracy_supposed_rnp_label\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_inaccuracy_supposed_visual_label\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"prediction_log\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"prediction_logs\",\"nativeType\":null,\"relationName\":\"prediction_inaccuraciesToprediction_logs\",\"relationFromFields\":[\"prediction_log_id\"],\"relationToFields\":[\"prediction_log_id\"],\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = undefined
 config.compilerWasm = undefined
