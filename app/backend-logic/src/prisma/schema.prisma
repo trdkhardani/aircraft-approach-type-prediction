@@ -29,7 +29,7 @@ model prediction_logs {
   prediction_log_headwind Float
   prediction_log_crosswind Float
   prediction_log_ceiling Int
-  prediction_log_weather_phenomenon String @db.Char(6)
+  prediction_log_weather_phenomenon String @db.Char(14)
   prediction_log_ils_label Int
   prediction_log_rnav_label Int
   prediction_log_rnp_label Int
