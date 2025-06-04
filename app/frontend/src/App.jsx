@@ -12,6 +12,7 @@ import RightSideBar from "./components/RightSidebar";
 function PredictionDashboardPage() {
   const [selectedAirport, setSelectedAirport] = useState("");
   const [selectedRunway, setSelectedRunway] = useState("");
+  const [manualInputMode, setManualInputMode] = useState(false)
 
   const mapRef = useRef();
 
@@ -38,6 +39,8 @@ function PredictionDashboardPage() {
         onAirportChange={setSelectedAirport}
         onRunwayChange={setSelectedRunway}
         selectedAirport={selectedAirport}
+        onManualInputModeChange={setManualInputMode}
+        manualInputMode={manualInputMode}
         mapRef={mapRef}
         airportData={airportData}
       />
@@ -53,6 +56,7 @@ function PredictionDashboardPage() {
           <MapPanel airportData={airportData} mapRef={mapRef}/>
         </main>
         <RightSideBar
+          manualInputMode={manualInputMode}
           selectedAirport={selectedAirport}
           selectedRunway={selectedRunway}
           metarData={metarData}

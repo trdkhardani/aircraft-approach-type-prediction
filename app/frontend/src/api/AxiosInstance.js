@@ -58,10 +58,13 @@ class AxiosInstance {
         })
     }
 
-    predict(inputData, setPredictionData) {
-        axios.post(`${VITE_BACKEND_API_URL}/api/predict/with-airport`, inputData, {
+    predict(inputData, setPredictionData, isWithAirportFeats) {
+        axios.post(`${VITE_BACKEND_API_URL}/api/predict`, inputData, {
             headers: {
                 'Content-Type': "application/json"
+            },
+            params: {
+                'airport_feats': isWithAirportFeats
             }
         })
         .then((response) => {

@@ -11,16 +11,21 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.1",
     "@tailwindcss/vite": "^4.1.5",
     "ag-charts-react": "^11.2.4",
     "axios": "^1.9.0",
     "frontend": "file:",
+    "lucide-react": "^0.512.0",
     "mapbox-gl": "^3.12.0",
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-gauge-component": "^1.2.64",
     "react-loading-skeleton": "^3.5.0",
+    "react-tooltip": "^5.28.1",
     "tailwindcss": "^4.1.5"
   },
   "devDependencies": {

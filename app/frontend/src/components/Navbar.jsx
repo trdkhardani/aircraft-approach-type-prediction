@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AxiosInstance from '../api/AxiosInstance'
+import Checkbox from '@mui/material/Checkbox';
 
-function NavBar({onAirportChange, onRunwayChange, selectedAirport, mapRef, airportData}) {
+function NavBar({onAirportChange, onRunwayChange, selectedAirport, onManualInputModeChange, manualInputMode, mapRef, airportData}) {
     const [runwayData, setRunwayData] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -32,6 +33,8 @@ function NavBar({onAirportChange, onRunwayChange, selectedAirport, mapRef, airpo
       })
     }
 
+    const handleManualInputModeChange = () => {onManualInputModeChange(!manualInputMode)}
+
     return (
       <nav className="bg-gray-800 text-white px-6 py-4 flex items-center justify-between">
         <div className="text-lg font-semibold flex items-center gap-2">
@@ -58,10 +61,9 @@ function NavBar({onAirportChange, onRunwayChange, selectedAirport, mapRef, airpo
             ))}
           </select>
           <>
-          <div className="flex items-center mb-4">
-          <input id="default-checkbox" type="checkbox" value="true" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></input>
-          <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Manual Weather Input</label>
-          </div>
+          <a className="manual-input-checkbox">
+          <Checkbox sx={{color: 'white', '&:hover': {bgcolor: 'blue'}}} checked={manualInputMode} onChange={handleManualInputModeChange} />Manual Weather Input
+          </a>
           </>
         </div>
       </nav>
