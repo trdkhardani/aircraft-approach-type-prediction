@@ -44,6 +44,6 @@ model prediction_inaccuracies {
   prediction_inaccuracy_supposed_rnav_label Int
   prediction_inaccuracy_supposed_rnp_label Int
   prediction_inaccuracy_supposed_visual_label Int
-  // prediction_log prediction_logs @relation(fields: [prediction_log_id], references: [prediction_log_id])
+  prediction_inaccuracy_additional_comments String?
   prediction_log prediction_logs @relation(fields: [prediction_log_id], references: [prediction_log_id])
 }

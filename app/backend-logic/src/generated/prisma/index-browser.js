@@ -147,7 +147,8 @@ exports.Prisma.Prediction_inaccuraciesScalarFieldEnum = {
   prediction_inaccuracy_supposed_ils_label: 'prediction_inaccuracy_supposed_ils_label',
   prediction_inaccuracy_supposed_rnav_label: 'prediction_inaccuracy_supposed_rnav_label',
   prediction_inaccuracy_supposed_rnp_label: 'prediction_inaccuracy_supposed_rnp_label',
-  prediction_inaccuracy_supposed_visual_label: 'prediction_inaccuracy_supposed_visual_label'
+  prediction_inaccuracy_supposed_visual_label: 'prediction_inaccuracy_supposed_visual_label',
+  prediction_inaccuracy_additional_comments: 'prediction_inaccuracy_additional_comments'
 };
 
 exports.Prisma.SortOrder = {

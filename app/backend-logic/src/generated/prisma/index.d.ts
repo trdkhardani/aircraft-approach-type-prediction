@@ -2299,6 +2299,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label: number | null
     prediction_inaccuracy_supposed_rnp_label: number | null
     prediction_inaccuracy_supposed_visual_label: number | null
+    prediction_inaccuracy_additional_comments: string | null
   }
 
   export type Prediction_inaccuraciesMaxAggregateOutputType = {
@@ -2308,6 +2309,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label: number | null
     prediction_inaccuracy_supposed_rnp_label: number | null
     prediction_inaccuracy_supposed_visual_label: number | null
+    prediction_inaccuracy_additional_comments: string | null
   }
 
   export type Prediction_inaccuraciesCountAggregateOutputType = {
@@ -2317,6 +2319,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label: number
     prediction_inaccuracy_supposed_rnp_label: number
     prediction_inaccuracy_supposed_visual_label: number
+    prediction_inaccuracy_additional_comments: number
     _all: number
   }
 
@@ -2342,6 +2345,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: true
     prediction_inaccuracy_supposed_rnp_label?: true
     prediction_inaccuracy_supposed_visual_label?: true
+    prediction_inaccuracy_additional_comments?: true
   }
 
   export type Prediction_inaccuraciesMaxAggregateInputType = {
@@ -2351,6 +2355,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: true
     prediction_inaccuracy_supposed_rnp_label?: true
     prediction_inaccuracy_supposed_visual_label?: true
+    prediction_inaccuracy_additional_comments?: true
   }
 
   export type Prediction_inaccuraciesCountAggregateInputType = {
@@ -2360,6 +2365,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: true
     prediction_inaccuracy_supposed_rnp_label?: true
     prediction_inaccuracy_supposed_visual_label?: true
+    prediction_inaccuracy_additional_comments?: true
     _all?: true
   }
 
@@ -2456,6 +2462,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label: number
     prediction_inaccuracy_supposed_rnp_label: number
     prediction_inaccuracy_supposed_visual_label: number
+    prediction_inaccuracy_additional_comments: string | null
     _count: Prediction_inaccuraciesCountAggregateOutputType | null
     _avg: Prediction_inaccuraciesAvgAggregateOutputType | null
     _sum: Prediction_inaccuraciesSumAggregateOutputType | null
@@ -2484,6 +2491,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: boolean
     prediction_inaccuracy_supposed_rnp_label?: boolean
     prediction_inaccuracy_supposed_visual_label?: boolean
+    prediction_inaccuracy_additional_comments?: boolean
     prediction_log?: boolean | prediction_logsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["prediction_inaccuracies"]>
 
@@ -2494,6 +2502,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: boolean
     prediction_inaccuracy_supposed_rnp_label?: boolean
     prediction_inaccuracy_supposed_visual_label?: boolean
+    prediction_inaccuracy_additional_comments?: boolean
     prediction_log?: boolean | prediction_logsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["prediction_inaccuracies"]>
 
@@ -2504,6 +2513,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: boolean
     prediction_inaccuracy_supposed_rnp_label?: boolean
     prediction_inaccuracy_supposed_visual_label?: boolean
+    prediction_inaccuracy_additional_comments?: boolean
     prediction_log?: boolean | prediction_logsDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["prediction_inaccuracies"]>
 
@@ -2514,9 +2524,10 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: boolean
     prediction_inaccuracy_supposed_rnp_label?: boolean
     prediction_inaccuracy_supposed_visual_label?: boolean
+    prediction_inaccuracy_additional_comments?: boolean
   }
 
-  export type prediction_inaccuraciesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"prediction_inaccuracy_id" | "prediction_log_id" | "prediction_inaccuracy_supposed_ils_label" | "prediction_inaccuracy_supposed_rnav_label" | "prediction_inaccuracy_supposed_rnp_label" | "prediction_inaccuracy_supposed_visual_label", ExtArgs["result"]["prediction_inaccuracies"]>
+  export type prediction_inaccuraciesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"prediction_inaccuracy_id" | "prediction_log_id" | "prediction_inaccuracy_supposed_ils_label" | "prediction_inaccuracy_supposed_rnav_label" | "prediction_inaccuracy_supposed_rnp_label" | "prediction_inaccuracy_supposed_visual_label" | "prediction_inaccuracy_additional_comments", ExtArgs["result"]["prediction_inaccuracies"]>
   export type prediction_inaccuraciesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     prediction_log?: boolean | prediction_logsDefaultArgs<ExtArgs>
   }
@@ -2539,6 +2550,7 @@ export namespace Prisma {
       prediction_inaccuracy_supposed_rnav_label: number
       prediction_inaccuracy_supposed_rnp_label: number
       prediction_inaccuracy_supposed_visual_label: number
+      prediction_inaccuracy_additional_comments: string | null
     }, ExtArgs["result"]["prediction_inaccuracies"]>
     composites: {}
   }
@@ -2969,6 +2981,7 @@ export namespace Prisma {
     readonly prediction_inaccuracy_supposed_rnav_label: FieldRef<"prediction_inaccuracies", 'Int'>
     readonly prediction_inaccuracy_supposed_rnp_label: FieldRef<"prediction_inaccuracies", 'Int'>
     readonly prediction_inaccuracy_supposed_visual_label: FieldRef<"prediction_inaccuracies", 'Int'>
+    readonly prediction_inaccuracy_additional_comments: FieldRef<"prediction_inaccuracies", 'String'>
   }
     
 
@@ -3427,7 +3440,8 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_ils_label: 'prediction_inaccuracy_supposed_ils_label',
     prediction_inaccuracy_supposed_rnav_label: 'prediction_inaccuracy_supposed_rnav_label',
     prediction_inaccuracy_supposed_rnp_label: 'prediction_inaccuracy_supposed_rnp_label',
-    prediction_inaccuracy_supposed_visual_label: 'prediction_inaccuracy_supposed_visual_label'
+    prediction_inaccuracy_supposed_visual_label: 'prediction_inaccuracy_supposed_visual_label',
+    prediction_inaccuracy_additional_comments: 'prediction_inaccuracy_additional_comments'
   };
 
   export type Prediction_inaccuraciesScalarFieldEnum = (typeof Prediction_inaccuraciesScalarFieldEnum)[keyof typeof Prediction_inaccuraciesScalarFieldEnum]
@@ -3639,6 +3653,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: IntFilter<"prediction_inaccuracies"> | number
     prediction_inaccuracy_supposed_rnp_label?: IntFilter<"prediction_inaccuracies"> | number
     prediction_inaccuracy_supposed_visual_label?: IntFilter<"prediction_inaccuracies"> | number
+    prediction_inaccuracy_additional_comments?: StringNullableFilter<"prediction_inaccuracies"> | string | null
     prediction_log?: XOR<Prediction_logsScalarRelationFilter, prediction_logsWhereInput>
   }
 
@@ -3649,6 +3664,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: SortOrder
     prediction_inaccuracy_supposed_rnp_label?: SortOrder
     prediction_inaccuracy_supposed_visual_label?: SortOrder
+    prediction_inaccuracy_additional_comments?: SortOrderInput | SortOrder
     prediction_log?: prediction_logsOrderByWithRelationInput
   }
 
@@ -3662,6 +3678,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: IntFilter<"prediction_inaccuracies"> | number
     prediction_inaccuracy_supposed_rnp_label?: IntFilter<"prediction_inaccuracies"> | number
     prediction_inaccuracy_supposed_visual_label?: IntFilter<"prediction_inaccuracies"> | number
+    prediction_inaccuracy_additional_comments?: StringNullableFilter<"prediction_inaccuracies"> | string | null
     prediction_log?: XOR<Prediction_logsScalarRelationFilter, prediction_logsWhereInput>
   }, "prediction_inaccuracy_id" | "prediction_log_id">
 
@@ -3672,6 +3689,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: SortOrder
     prediction_inaccuracy_supposed_rnp_label?: SortOrder
     prediction_inaccuracy_supposed_visual_label?: SortOrder
+    prediction_inaccuracy_additional_comments?: SortOrderInput | SortOrder
     _count?: prediction_inaccuraciesCountOrderByAggregateInput
     _avg?: prediction_inaccuraciesAvgOrderByAggregateInput
     _max?: prediction_inaccuraciesMaxOrderByAggregateInput
@@ -3689,6 +3707,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: IntWithAggregatesFilter<"prediction_inaccuracies"> | number
     prediction_inaccuracy_supposed_rnp_label?: IntWithAggregatesFilter<"prediction_inaccuracies"> | number
     prediction_inaccuracy_supposed_visual_label?: IntWithAggregatesFilter<"prediction_inaccuracies"> | number
+    prediction_inaccuracy_additional_comments?: StringNullableWithAggregatesFilter<"prediction_inaccuracies"> | string | null
   }
 
   export type prediction_logsCreateInput = {
@@ -3848,6 +3867,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label: number
     prediction_inaccuracy_supposed_rnp_label: number
     prediction_inaccuracy_supposed_visual_label: number
+    prediction_inaccuracy_additional_comments?: string | null
     prediction_log: prediction_logsCreateNestedOneWithoutPrediction_inaccuraciesInput
   }
 
@@ -3858,6 +3878,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label: number
     prediction_inaccuracy_supposed_rnp_label: number
     prediction_inaccuracy_supposed_visual_label: number
+    prediction_inaccuracy_additional_comments?: string | null
   }
 
   export type prediction_inaccuraciesUpdateInput = {
@@ -3866,6 +3887,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_rnp_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_visual_label?: IntFieldUpdateOperationsInput | number
+    prediction_inaccuracy_additional_comments?: NullableStringFieldUpdateOperationsInput | string | null
     prediction_log?: prediction_logsUpdateOneRequiredWithoutPrediction_inaccuraciesNestedInput
   }
 
@@ -3876,6 +3898,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_rnp_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_visual_label?: IntFieldUpdateOperationsInput | number
+    prediction_inaccuracy_additional_comments?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type prediction_inaccuraciesCreateManyInput = {
@@ -3885,6 +3908,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label: number
     prediction_inaccuracy_supposed_rnp_label: number
     prediction_inaccuracy_supposed_visual_label: number
+    prediction_inaccuracy_additional_comments?: string | null
   }
 
   export type prediction_inaccuraciesUpdateManyMutationInput = {
@@ -3893,6 +3917,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_rnp_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_visual_label?: IntFieldUpdateOperationsInput | number
+    prediction_inaccuracy_additional_comments?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type prediction_inaccuraciesUncheckedUpdateManyInput = {
@@ -3902,6 +3927,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_rnp_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_visual_label?: IntFieldUpdateOperationsInput | number
+    prediction_inaccuracy_additional_comments?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4137,6 +4163,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: SortOrder
     prediction_inaccuracy_supposed_rnp_label?: SortOrder
     prediction_inaccuracy_supposed_visual_label?: SortOrder
+    prediction_inaccuracy_additional_comments?: SortOrder
   }
 
   export type prediction_inaccuraciesAvgOrderByAggregateInput = {
@@ -4153,6 +4180,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: SortOrder
     prediction_inaccuracy_supposed_rnp_label?: SortOrder
     prediction_inaccuracy_supposed_visual_label?: SortOrder
+    prediction_inaccuracy_additional_comments?: SortOrder
   }
 
   export type prediction_inaccuraciesMinOrderByAggregateInput = {
@@ -4162,6 +4190,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: SortOrder
     prediction_inaccuracy_supposed_rnp_label?: SortOrder
     prediction_inaccuracy_supposed_visual_label?: SortOrder
+    prediction_inaccuracy_additional_comments?: SortOrder
   }
 
   export type prediction_inaccuraciesSumOrderByAggregateInput = {
@@ -4374,6 +4403,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label: number
     prediction_inaccuracy_supposed_rnp_label: number
     prediction_inaccuracy_supposed_visual_label: number
+    prediction_inaccuracy_additional_comments?: string | null
   }
 
   export type prediction_inaccuraciesUncheckedCreateWithoutPrediction_logInput = {
@@ -4382,6 +4412,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label: number
     prediction_inaccuracy_supposed_rnp_label: number
     prediction_inaccuracy_supposed_visual_label: number
+    prediction_inaccuracy_additional_comments?: string | null
   }
 
   export type prediction_inaccuraciesCreateOrConnectWithoutPrediction_logInput = {
@@ -4406,6 +4437,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_rnp_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_visual_label?: IntFieldUpdateOperationsInput | number
+    prediction_inaccuracy_additional_comments?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type prediction_inaccuraciesUncheckedUpdateWithoutPrediction_logInput = {
@@ -4414,6 +4446,7 @@ export namespace Prisma {
     prediction_inaccuracy_supposed_rnav_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_rnp_label?: IntFieldUpdateOperationsInput | number
     prediction_inaccuracy_supposed_visual_label?: IntFieldUpdateOperationsInput | number
+    prediction_inaccuracy_additional_comments?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type prediction_logsCreateWithoutPrediction_inaccuraciesInput = {
