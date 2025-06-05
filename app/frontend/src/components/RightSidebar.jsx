@@ -24,9 +24,12 @@ function ApproachRecommendation({manualInputMode, selectedAirport, selectedRunwa
     const [error, setError] = useState(null);
     
     // modal
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [openWeatherInputForm, setOpenWeatherInputForm] = useState(false);
+    const [openReportForm, setOpenReportForm] = useState(false);
+    const handleOpenWeatherInputFrom = () => setOpenWeatherInputForm(true);
+    const handleCloseWeatherInputFrom = () => setOpenWeatherInputForm(false);
+    const handleOpenReportForm = () => setOpenReportForm(true);
+    const handleCloseReportForm = () => setOpenReportForm(false);
 
     const inputData = {
         visibility: metarData?.metar_info?.decoded?.visibility,
@@ -65,14 +68,14 @@ function ApproachRecommendation({manualInputMode, selectedAirport, selectedRunwa
             return (
             <>
             <ModalWeatherInput 
-            open={open} 
-            handleClose={handleClose} 
+            open={openWeatherInputForm} 
+            handleClose={handleCloseWeatherInputFrom} 
             setPredictionData={setPredictionData} 
             withAirportFeats={withAirportFeats} 
             selectedAirport={selectedAirport} 
             selectedRunway={selectedRunway}
             />
-            <button onClick={handleOpen} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Manual Entry</button>
+            <button onClick={handleOpenWeatherInputFrom} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Manual Entry</button>
             </>
             )
         }
@@ -85,7 +88,7 @@ function ApproachRecommendation({manualInputMode, selectedAirport, selectedRunwa
 
     const handleReportInaccuracyClick = () => {
         predictionLog();
-        handleOpen();
+        handleOpenReportForm();
     }
 
     const reportInaccuracyButton = () => {
@@ -93,8 +96,8 @@ function ApproachRecommendation({manualInputMode, selectedAirport, selectedRunwa
             return (
                 <>
                 <ModalReportInaccuracy
-                open={open}
-                handleClose={handleClose}
+                open={openReportForm}
+                handleClose={handleCloseReportForm}
                 predictionLogData={predictionLogData}
                 />
                 <button onClick={handleReportInaccuracyClick} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Report Inaccuracy</button>

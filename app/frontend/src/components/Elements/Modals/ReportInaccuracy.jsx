@@ -68,10 +68,10 @@ function ModalReportInaccuracy({open, handleClose, predictionLogData}) {
                 <b>Report Inaccuracy</b>
             </Typography>
             <p>Prediction ID: {predictionLogData?.prediction_log?.prediction_log_id}</p>
-            <p>ILS: {predictionLogData?.prediction_log?.prediction_log_ils_label}</p>
+            {/* <p>ILS: {predictionLogData?.prediction_log?.prediction_log_ils_label}</p>
             <p>RNAV: {predictionLogData?.prediction_log?.prediction_log_rnav_label}</p>
             <p>RNP: {predictionLogData?.prediction_log?.prediction_log_rnp_label}</p>
-            <p>VISUAL: {predictionLogData?.prediction_log?.prediction_log_visual_label}</p>
+            <p>VISUAL: {predictionLogData?.prediction_log?.prediction_log_visual_label}</p> */}
             {/* <p>Airport: {predictionLogData?.prediction_log?.prediction_log_airport_icao}</p> */}
 
             {/* <Checkbox sx={{color: 'black', '&:hover': {bgcolor: 'blue'}}} value={inputCorrectionData.supposed_ils} checked={ilsLabel} onChange={handleIlsLabelChange}/>ILS
@@ -82,24 +82,81 @@ function ModalReportInaccuracy({open, handleClose, predictionLogData}) {
             <p>RNP: {+rnpLabel}</p>
             <Checkbox sx={{color: 'black', '&:hover': {bgcolor: 'blue'}}} value={inputCorrectionData.supposed_visual} checked={visualLabel} onChange={handleVisualLabelChange}/>VISUAL
             <p>VISUAL: {+visualLabel}</p> */}
-            <label htmlFor="prediction_log_id">Prediction ID
-            <input name='prediction_log_id' type="text" defaultValue={inputCorrectionData.prediction_log_id} value={inputCorrectionData.prediction_log_id} onChange={handleChange}/>
-            </label>
-            <label htmlFor="supposed_ils">ILS
-            <input name="supposed_ils" min={0} max={1} type='number' defaultValue={inputCorrectionData.supposed_ils} value={inputCorrectionData.supposed_ils} onChange={handleChange} />
-            </label>
-            <label htmlFor="supposed_rnav">RNAV
-            <input name="supposed_rnav" min={0} max={1} type='number' defaultValue={inputCorrectionData.supposed_rnav} value={inputCorrectionData.supposed_rnav} onChange={handleChange} />
-            </label>
-            <label htmlFor="supposed_rnp">RNP
-            <input name="supposed_rnp" min={0} max={1} type='number' defaultValue={inputCorrectionData.supposed_rnp} value={inputCorrectionData.supposed_rnp} onChange={handleChange} />
-            </label>
-            <label htmlFor="supposed_visual">VISUAL
-            <input name="supposed_visual" min={0} max={1} type='number' defaultValue={inputCorrectionData.supposed_visual} value={inputCorrectionData.supposed_visual} onChange={handleChange} />
-            </label>
-            <label htmlFor="additional_comments">Additional Comments
-            <input name="additional_comments" value={inputCorrectionData.additional_comments} onChange={handleChange} />
-            </label>
+            <div className="pt-4 space-y-4">
+    <h3 className="text-sm font-medium text-gray-700 mb-2">Supposed Correct Approaches (0 or 1)</h3>
+
+    <div>
+        <label htmlFor="prediction_log_id" className="block text-sm font-medium text-gray-700">Prediction ID</label>
+        <input
+        type="text"
+        name="prediction_log_id"
+        value={inputCorrectionData.prediction_log_id}
+        onChange={handleChange}
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+    </div>
+    <div>
+        <label htmlFor="supposed_ils" className="block text-sm font-medium text-gray-700">ILS</label>
+        <input
+        type="number"
+        name="supposed_ils"
+        min={0}
+        max={1}
+        value={inputCorrectionData.supposed_ils}
+        onChange={handleChange}
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+    </div>
+
+    <div>
+        <label htmlFor="supposed_rnav" className="block text-sm font-medium text-gray-700">RNAV</label>
+        <input
+        type="number"
+        name="supposed_rnav"
+        min={0}
+        max={1}
+        value={inputCorrectionData.supposed_rnav}
+        onChange={handleChange}
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+    </div>
+
+    <div>
+        <label htmlFor="supposed_rnp" className="block text-sm font-medium text-gray-700">RNP</label>
+        <input
+        type="number"
+        name="supposed_rnp"
+        min={0}
+        max={1}
+        value={inputCorrectionData.supposed_rnp}
+        onChange={handleChange}
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+    </div>
+
+    <div>
+        <label htmlFor="supposed_visual" className="block text-sm font-medium text-gray-700">Visual</label>
+        <input
+        type="number"
+        name="supposed_visual"
+        min={0}
+        max={1}
+        value={inputCorrectionData.supposed_visual}
+        onChange={handleChange}
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+    </div>
+    <div>
+        <label htmlFor="additional_comments" className="block text-sm font-medium text-gray-700">Additional Comments</label>
+        <textarea
+        // type="textbox"
+        name="additional_comments"
+        value={inputCorrectionData.additional_comments}
+        onChange={handleChange}
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+    </div>
+</div>
             <button onClick={handleSubmit} className='bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded'>Report</button>
             </Box>
         </Modal>
