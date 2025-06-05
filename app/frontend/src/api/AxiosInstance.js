@@ -76,6 +76,38 @@ class AxiosInstance {
             this.setLoading(false)
         })
     }
+
+    predictionLogDetails(predictionLogId, setPredictionLogData) {
+        axios.get(`${VITE_BACKEND_API_URL}/api/prediction-log/${predictionLogId}`, {
+            headers: {
+                'Content-Type': "application/json"
+            }
+        })
+        .then((response) => {
+            setPredictionLogData(response.data)
+            this.setLoading(false)
+        })
+        .catch((err) => {
+            this.setError(err.message)
+            this.setLoading(false)
+        })
+    }
+
+    reportInaccuracy(inputCorrectionData, setPredictionCorrectionData) {
+        axios.post(`${VITE_BACKEND_API_URL}/api/report-inaccuracy`, inputCorrectionData, {
+            headers: {
+                'Content-Type': "application/json"
+            }
+        })
+        .then((response) => {
+            setPredictionCorrectionData(response.data)
+            this.setLoading(false)
+        })
+        .catch((err) => {
+            this.setError(err.message)
+            this.setLoading(false)
+        })
+    }
 }
 
 export default AxiosInstance;

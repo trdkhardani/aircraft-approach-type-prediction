@@ -5,6 +5,7 @@ import Checkbox from "@mui/material/Checkbox"
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import ModalWeatherInput from './Elements/Modals/ManualInput'
+import ModalReportInaccuracy from "./Elements/Modals/ReportInaccuracy";
 
 function RightSideBar({manualInputMode, selectedAirport, selectedRunway, metarData, rvrData}) {
     return (
@@ -18,6 +19,7 @@ function RightSideBar({manualInputMode, selectedAirport, selectedRunway, metarDa
 function ApproachRecommendation({manualInputMode, selectedAirport, selectedRunway, metarData, rvrData}) {
     const [withAirportFeats, setWithAirportFeats] = useState(true);
     const [predictionData, setPredictionData] = useState([]);
+    const [predictionLogData, setPredictionLogData] = useState([])
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
@@ -75,9 +77,35 @@ function ApproachRecommendation({manualInputMode, selectedAirport, selectedRunwa
             )
         }
     }
+    
+    const predictionLog = () => {
+        const axiosInstance = new AxiosInstance(setLoading, setError);
+        axiosInstance.predictionLogDetails(predictionData?.model_output?.prediction_log_id, setPredictionLogData)
+    }
+
+    const handleReportInaccuracyClick = () => {
+        predictionLog();
+        handleOpen();
+    }
+
+    const reportInaccuracyButton = () => {
+        if(predictionData?.model_output) { // only show after prediction
+            return (
+                <>
+                <ModalReportInaccuracy
+                open={open}
+                handleClose={handleClose}
+                predictionLogData={predictionLogData}
+                />
+                <button onClick={handleReportInaccuracyClick} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Report Inaccuracy</button>
+                </>
+            )
+        }
+    }
 
     return (
         <>
+        <p><b>Prediction ID: {predictionData?.model_output?.prediction_log_id}</b></p>
         <div id="top-confidence-score" className="mb-4 p-3 bg-gray-700 rounded-md shadow flex justify-between">
             <h3 className="font-semibold">Confidence Score</h3>
             {gaugeComponent((predictionData?.model_output?.paired_results[0]?.probability * 100).toFixed(2))}
@@ -104,10 +132,11 @@ function ApproachRecommendation({manualInputMode, selectedAirport, selectedRunwa
         </a>
         <div className="mb-4 p-3 flex justify-between">
         {predictButton()}
+        {reportInaccuracyButton()}
         {/* <button onClick={handleClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Predict</button> */}
-        <button onClick={handleClick} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Report Inaccuracy</button>
         </div>
         <div id="debug">
+            {/* <p>{predictionData?.model_output?.prediction_log_id}</p> */}
             {/* <p>Manual Input Mode: {manualInputMode.toString()}</p>
             <p>Checkbox: {withAirportFeats.toString()}</p>
             <p>{inputData.visibility}</p>
