@@ -1,66 +1,24 @@
-- multiclass multilabel, berarti tambahkan kolom untuk masing-masing tipe approach. misal:
-ILS | RNAV | RNP | VISUAL
-1 | 0 | 1 | 0
-Berarti, tipe approach-nya itu ILS dan RNP (karena 1 atau true)
-jadi kolom label itu lebih dari satu
+1. KLAX: "...INST APCHS AND RNAV RNP APCHS 6R, OPP DIRECTION TFC DEPG RY 25, SIMUL INSTR DEPARTURES IN PROG 25R." (harusnya runway 6R, yaitu karena setelah "APCHS". setelahnya diabaikan). kemudian, "INST APCHS" itu merujuk ke semua tipe pendekatan (https://epicflightacademy.com/approach/)
+2. any runway yang runway designator heading/number-nya itu 1 karakter aja di D-ATIS, harusnya concat dengan "0" di depan supaya equal dengan "runway_code" di "rvr_info" (1, 2, 3, dll. contoh atis_id 56)
+3. untuk rvr, disesuaikan rvr-nya dengan airport_id dari database (sebelah kanan) berikut:
+1 - "KLAX"
+2 - "KATL"
+3 - "KIAD"
+4 - "KORD"
+5 - "KSFO"
+6 - "KJFK"
+karena rupanya data dalam "rvr_info" itu campuran berbagai bandara. jadi koreksinya mungkin kayak gini pseudocode-nya:
+if airport == "KLAX"
+then find "airport_id" in "rvr_info" where the "airport_id" is 1 to get the "rvr"
+4. KATL itu bervariasi. contoh: "...SIMULTANEOUS APCHS IN USE VIS 26R, VIS 27L, VIS 28." dan "...VISUAL APPROACH RWY 26L, VISUAL APPROACH RWY 27L, VISUAL APPROACH RWY 28.", dan "...SIMULTANEOUS APCHS IN USE ILS 8L, ILS 9R, VISUAL 10." what i'm trying to say is, khusus KATL, kayaknya lebih baik regex-ing-nya dengan cara di kalimat ke-3, pisahkan sesuai runway-nya, dengan teks seperti yang telah disebutkan contohnya
+5. di KSFO, landing runway-nya ada di kalimat ke-4 jika visual approach (special case visual approach di KSFO). contohnya "... (kalimat ke-3) SIMULTANEOUS CHARTED VISUAL FLIGHT PROCEDURES IN USE. (kalimat ke-4) LNDG RWYS 28L, 28R.". tapi sebenarnya ada juga yang di KSFO, meskipun visual approach, tetap di kalimat ke-3. jadi kadang2 gabungan antara kalimat ke-3 dan kalimat-4 di D-ATIS KSFO. contoh: "...SIMUL CHARTED VISUAL FLIGHT PROCEDURES RWYS 28R AND 28L APP IN USE."
+6. untuk KORD, case-nya sama seperti KATL. contoh: "...ARR EXP VECTORS ILS RWY 10C APCH, VISUAL APCH RWY 9L, VISUAL APCH RWY 10R."
+7. untuk KJFK, case-nya juga mirip dengan KATL dan KORD. contoh: "...APPROACH IN USE ILS RY 31R, VISUAL APCH RY 31L." dan/atau "...APPROACH IN USE ILS RY 31R, ILS RY 31L, RNAV GPS X RY 22L."
 
-found issues:
-- unusual visibility format (SOLVED)
-    - the current code makes the written visibility is the denominator. it supposed to be decimal (SOLVED)
-- VRB wind (SOLVED)
-- TS, RA, etc (SOLVED)
-- if there's wind gust (SOLVED)
-- `ils_runway_category` not changed (still the same): KIAD 19L, KLAX 6L, KLAX 24L, KLAX 25R 
+damn, for the KLAX one, there are some approach texts like, "...INST APCHS AND RNAV RNP APCHS RY 24R AND 25L, OR VCTR FOR VISUAL APCH WILL BE PROVIDED, SIMUL VISUAL APCHS TO ALL RWYS ARE IN PROG." what i'm trying to say is that the runways are also mentioned after "RY" and "AND". but let's just ignore the "SIMUL VISUAL APCHS TO ALL RWYS ARE IN PROG",  we focus on the runways that mentioned there. for that case, the script can't extract it since we only assume that only after "APCHS".
 
-- pisah simbol rvr (tendencies) dengan numeric rvr. jadi ada dua kolom/fitur untuk RVR (SOLVED)
+well uh there's more actually, like this for example: "...SIMUL INST APCHS AND RNAV RNP RWYS 6L AND 7R APCHS, SIMUL INSTR DEPARTURES IN PROG RWYS 6 AND 7."
 
-Wind Direction = -1 for VRB wind, 0 for calm wind, normal degrees for regular wind.
-Ceiling -1 means no ceiling
-soon:
-- add max_headwind and max_crosswind if there's wind gust
+there's frickin more again, e.g. "...SIMUL INST APCHS AND RNAV RNP ILS RY 6R ILS RY 7R APCHS, SIMUL INSTR DEPARTURES IN PROG RWYS 6 AND 7." (atis_id 2141)
 
-----------------
-HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
-$ node preprocess.js 
-Page 1 processed.
-All pages processed.
-
-HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
-$ node preprocess.js 
-Page 3747 processed.
-All pages processed.
-
-HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
-$ node preprocess.js 
-Page 3748 processed.
-All pages processed.
-
-HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
-$ node preprocess.js 
-Page 3749 processed.
-All pages processed.
-
-HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
-$ node preprocess.js 
-Page 3746 processed.
-All pages processed.
-
-HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
-$ node preprocess.js 
-Page 3742 processed.
-All pages processed.
-
-HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
-$ node preprocess.js 
-Page 3741 processed.
-All pages processed.
-
-HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
-$ node preprocess.js 
-Page 3740 processed.
-All pages processed.
-
-HP@OMEN-15 MINGW64 /e/Kuliah/8th Semester/Final Project/code/preprocessing (main)
-$ node preprocess.js 
-Page 3739 processed.
-All pages processed.
+so i guess "INST APCHS" doesn't always mean it is all approaches. "INST APCHS" is just the category of the approaches type mentioned after that phrase.

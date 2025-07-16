@@ -15,6 +15,8 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "get-atis": "file:",
+    "json2csv": "^6.0.0-alpha.2",
+    "metar": "^1.0.0",
     "prisma": "^6.4.1",
     "rvr": "^1.0.4"
   },

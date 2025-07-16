@@ -4,10 +4,10 @@ import pickle
 import numpy as np
 
 # load model
-with open("./trained-model/model-xgb-ovr-BYS-with_airport_feats.pkl", "rb") as f:
+with open("./trained-model/model-rf-ovr-BYS-with_airport_feats.pkl", "rb") as f:
     model_with_airport_feats = pickle.load(f)
 
-with open("./trained-model/model-xgb-ovr-BYS-no_airport_feats.pkl", "rb") as f:
+with open("./trained-model/model-rf-ovr-BYS-no_airport_feats.pkl", "rb") as f:
     model_no_airport_feats = pickle.load(f)
 
 # create FastAPI app
