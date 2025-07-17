@@ -1,6 +1,6 @@
 # ApproachSafe (Thesis Project)
 ## Environments and Libraries
-### [get-atis](./get-atis/)
+### [get-atis](https://github.com/trdkhardani/aircraft-approach-type-prediction/tree/main/get-atis)
 This is used to fetch ATIS data from `https://datis.clowd.io/api/{airport_icao_code}` and save it to database. REST API is used to show the fetched data.
 <!-- --- -->
 #### Environment and Library Used
@@ -13,7 +13,7 @@ This is used to fetch ATIS data from `https://datis.clowd.io/api/{airport_icao_c
 
 ---
 
-### [preprocessing](./preprocessing/)
+### [preprocessing](https://github.com/trdkhardani/aircraft-approach-type-prediction/tree/main/preprocessing)
 This is used to convert fetched ATIS data that is shown in the `get-atis` REST API to JSON. Then, it is converted to CSV format for further processing. Finally, the converted ATIS data from JSON to CSV will be processed further to be used as training data for the machine learning model.
 #### Environment and Library Used to Convert REST API JSON Response to JSON File
 - Node.js 22.15.0
@@ -25,7 +25,7 @@ This is used to convert fetched ATIS data that is shown in the `get-atis` REST A
 
 ---
 
-### [build-train](./build-train/)
+### [build-train](https://github.com/trdkhardani/aircraft-approach-type-prediction/tree/main/build-train/)
 This is used to build and train the machine learning model using the preprocessed data from the `datasets` module. The trained model is then saved to a file for later use.
 #### Environment and Library Used to Build and Train the Machine Learning Model
 - Jupyter Notebook 7.3.3
@@ -41,7 +41,7 @@ This is used to build and train the machine learning model using the preprocesse
 
 ---
 
-### [app](./app/)
+### [app](https://github.com/trdkhardani/aircraft-approach-type-prediction/tree/main/app/)
 This is the main application that uses the trained machine learning model to predict the approach type based on the trained data.
 #### Environment and Library Used to Build the Application
 1. Front-end
