@@ -9,7 +9,6 @@ const getAirportInfo = async (airportIcao) => {
         const result = {
             airport: response.data[0].airport,
             atis: response.data[0].datis,
-            updatedAt: response.data[0].updatedAt,
         }
 
         const airport = await prisma.airports.findFirst({
@@ -41,7 +40,6 @@ const getAirportInfo = async (airportIcao) => {
             data: {
                 airport_id: airport.airport_id,
                 atis_info: result.atis,
-                atis_added_at: result.updatedAt
             }
         })
 
