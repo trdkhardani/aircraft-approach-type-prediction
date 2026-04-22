@@ -5,10 +5,11 @@ const prisma = new PrismaClient();
 
 const getAirportInfo = async (airportIcao) => {
     try {
-        const response = await axios.get(`https://datis.clowd.io/api/${airportIcao}`);
+        const response = await axios.get(`https://atis.info/api/${airportIcao}`);
         const result = {
             airport: response.data[0].airport,
             atis: response.data[0].datis,
+            updatedAt: response.data[0].updatedAt,
         }
 
         const airport = await prisma.airports.findFirst({
@@ -40,6 +41,7 @@ const getAirportInfo = async (airportIcao) => {
             data: {
                 airport_id: airport.airport_id,
                 atis_info: result.atis,
+                atis_added_at: result.updatedAt
             }
         })
 
@@ -60,6 +62,13 @@ const getAirportInfo = async (airportIcao) => {
         getAirportInfo("KORD"),
         getAirportInfo("KSFO"),
         getAirportInfo("KJFK"),
+        getAirportInfo("KBOS"),
+        getAirportInfo("KCMH"),
+        getAirportInfo("KEWR"),
+        getAirportInfo("KMIA"),
+        getAirportInfo("KSEA"),
+        getAirportInfo("KDEN"),
+        getAirportInfo("KCLT"),
     ]);
 
     setInterval(async () => {
@@ -70,6 +79,13 @@ const getAirportInfo = async (airportIcao) => {
             getAirportInfo("KORD"),
             getAirportInfo("KSFO"),
             getAirportInfo("KJFK"),
+            getAirportInfo("KBOS"),
+            getAirportInfo("KCMH"),
+            getAirportInfo("KEWR"),
+            getAirportInfo("KMIA"),
+            getAirportInfo("KSEA"),
+            getAirportInfo("KDEN"),
+            getAirportInfo("KCLT"),
         ]);
     }, 3600000);
 })();
